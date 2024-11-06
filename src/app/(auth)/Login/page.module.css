@@ -1,0 +1,82 @@
+.container {
+  /* height: 100vh; */
+  width: 100%;
+  max-width: 850px;
+  /* background-color: aqua; */
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 300px;
+}
+
+.userResponse {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  align-items: end;
+}
+.parent {
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  align-items: start;
+}
+
+.userResponseText {
+  background-color: #f6f6f6;
+  color: var(--color-text);
+  border: 1.6px solid #e0e0e0;
+  border-radius: 10px 10px 0 10px;
+  padding: 10px 15px;
+  width: fit-content;
+  font-size: var(--f2);
+  font-weight: 500;
+  margin: 15px 0;
+}
+
+.inputContainer {
+  display: flex;
+  justify-content: flex-end;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+  margin: 15px 0;
+}
+.inputContainer input[type="text"] {
+
+  flex: 1 1 auto;
+  min-width: 30px;
+  max-width: 250px;
+  padding: 10px 15px; 
+  border-radius: 10px;
+  border: 1.6px solid #E0E0E0;
+  margin-bottom: 10px; 
+  font-size: var(--f2);
+  font-weight: 500;
+}
+
+.inputContainer button {
+  flex: 0 0 auto;
+  background-color: #fff;
+  color: var(--primary-color);
+  min-width: 70px;
+  border: 1.5px solid var(--primary-color);
+  padding:  7px 15px;
+  font-weight: 500;
+  margin: 0px 0 10px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: var(--f2);
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.inputContainer button:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}

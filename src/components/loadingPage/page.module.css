@@ -1,0 +1,43 @@
+.container{
+
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+}
+
+.logo_wrapper{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.title{
+    font-size: 1rem;
+    line-height: 1.4rem;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+
+.loading{
+    position: absolute;
+    bottom: 0px;
+    left: 30px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+}
+
+.loading p{
+    line-height: 20px;
+    font-size: var(--f2);
+    margin-left: 10px;
+}

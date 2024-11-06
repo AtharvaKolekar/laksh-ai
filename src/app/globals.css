@@ -1,0 +1,76 @@
+:root {
+  --color-bg: #ffffff;
+  --color-bg2: #151c35;
+  --color-bg3: #37446b71;
+  /* --color-bg2: #d6e0f50f; */
+  --color-border: #eceef3;
+
+  
+  --color-text: #151c35;
+  --color-text-bright: #ffffff;
+  --color-text-dim: #AEB9E1;
+
+  --primary-color: #6100FF;
+  --secondary-color: #ba0ffd;
+
+  --f1: 1.2rem; /* 22.4px */ /* old 24px */
+  --f2: 0.9rem; /* 16px */
+  --f3: 0.875rem; /* 14px */
+  --f4: 0.75rem; /* 12px */
+  --pad-full: 1.75rem;
+  --pad-half: 0.875rem;
+  --pad-quarter: 0.4375rem;
+
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body{
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  
+}
+
+
+main {
+  display: block;
+  min-height: 100vh;
+  position: relative;
+}
+
+body:after {
+  content: "";
+  background-image: -webkit-radial-gradient(circle, #AEB9E1 1.3px, transparent 0);
+  background-image: radial-gradient(circle, #AEB9E1 1.3px, transparent 0);
+  opacity: .4;
+  background-size: 35px 35px;
+  background-position: 50% 0;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  animation: dotScroll 16s linear infinite;
+}
+
+@keyframes dotScroll {
+  0% {
+    background-position: 0 40%;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}

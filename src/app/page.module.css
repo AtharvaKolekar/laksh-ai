@@ -1,0 +1,151 @@
+.header{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  border-bottom: 1px solid var(--color-border);
+  width: 100%;
+  height: 80px;
+  background-color: var(--color-bg);
+}
+
+.nav{
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  padding: 0.5rem 1rem;
+  font-size: var(--f2);
+}
+.nav svg{
+  height: 18px;
+  width: 18px;
+}
+
+.nav a{
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 500;
+  transition: 0.1s;
+}
+
+.header a:hover{
+  transform: scale(1.05);
+}
+
+a.loginBtn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a.signupBtn{
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background-color: var(--primary-color);
+  color: var(--color-bg);
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+
+/* Section1 */
+
+.sec1_wrapper{
+  height: calc(100vh - 250px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sec1{
+  font-size: 1.25rem;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.sec1 svg{
+  height: 24px;
+  width: 24px;
+}
+.title{
+  display: flex; 
+  gap: 5px; 
+  justify-content: center;
+  margin: 0.4rem auto;
+  font-size: 1.5rem;
+}
+.ai{
+  display: flex;
+  align-items: top;
+  gap: 3px;
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+.sec1 h1 {
+  font-size: 4rem;
+  font-weight: 600;
+  background: linear-gradient(to bottom right, #1A93CF 0%, #A34ACF 76%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* .sec1 video{
+
+  width: 200px;
+  height: 100px;
+  object-fit: cover;
+  mix-blend-mode:darken;
+} */
+.sec1 img{
+  width: 300px;
+  height: 150px;
+}
+.subtitle{
+  font-size: var(--f1);
+  margin: 1rem auto 1.5rem;
+  max-width: 550px;
+
+}
+
+a.tryBtn{
+  background-color: var(--color-bg);
+  color: var(--primary-color);
+  border: var(--primary-color) 1.5px solid;
+  border-radius: 30px;
+  padding: 0.25rem 0.75rem;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 60px auto;
+}
+
+
+@media (max-width: 768px) {
+  .header{
+    justify-content: space-between;
+  }
+  .nav {
+    display: none;
+  }
+  .subtitle{
+    font-size: var(--f2);
+  }
+  .title{
+    font-size: 1.2rem;
+  }
+  .sec1 h1 {
+    font-size: 2.5rem;
+  }
+  .sec1 img{
+    width: 250px;
+    height: 125px;
+  }
+  a.tryBtn{
+    font-size: var(--f2);
+  }
+}

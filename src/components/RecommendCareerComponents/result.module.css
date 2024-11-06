@@ -1,0 +1,147 @@
+.container {
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0.5rem 1.5rem;
+  text-align: left;
+
+  --rc1: #647eff;
+  --rc2: #9b72cb;
+  --rc3: #d965a7;
+}
+.container p{
+  margin: 0;
+}
+.ai {
+  display: flex;
+  align-items: flex-start;
+  /* gap: 3px; */
+  color: var(--secondary-color);
+
+}
+.ai svg {
+  height: 20px;
+  width: 24px;
+}
+
+.animate h2 {
+  margin: 20px 0 30px;
+  font-size: 55px;
+  font-weight: 600;
+  /* font-family: Gilroy_ExtraBold_Rupee; */
+}
+.animate {
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(
+    74deg,
+    var(--rc1) 0,
+    var(--rc2) 10%,
+    var(--rc3) 20%,
+    var(--rc3) 24%,
+    var(--rc2) 35%,
+    var(--rc1) 44%,
+    var(--rc2) 50%,
+    var(--rc3) 56%,
+    transparent 75%,
+    transparent 100%
+  );
+  -text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 400% 100%;
+
+  animation: movinggradient 5s forwards;
+}
+
+@keyframes movinggradient {
+  0% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+.toRight {
+  opacity: 0;
+  animation: fadeIn 1.2s ease forwards;
+  display: inline-flex;
+  font-weight: 500;
+}
+
+@keyframes toRight {
+  0% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+.otherCareers {
+  padding: 10px 0;
+}
+.otherCareersContainer p {
+  color: #333;
+}
+
+.sec {
+
+  background-color: #f6f6f6;
+  padding: 14px 21px;
+  margin: 15px 0;
+  border-radius: 5px;
+
+  max-width: 360px;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px,
+    rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px,
+    rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px,
+    rgba(42, 51, 70, 0.04) 0px 6px 6px -3px,
+    rgba(14, 63, 126, 0.04) 0px 12px 12px -6px,
+    rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
+}
+
+.a {
+  border-left: #ff00ef 4px solid;
+  animation-delay: 2.8s;
+}
+
+.b {
+  border-left: #00c2ff 4px solid;
+  animation-delay: 3.6s;
+}
+
+.c {
+  border-left: #5dd450 4px solid;
+  animation-delay: 4.4s;
+}
+
+.d {
+  animation-delay: 2s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.generateAgain {
+  width: 100%;
+}
+
+.generateAgain button {
+  padding: 10px 15px;
+  background-color: #fff;
+  color: #5470fe;
+  font-weight: 600;
+  border: none;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 5.3s;
+  border: #5470fe 1.2px solid;
+  border-radius: 5px;
+}
