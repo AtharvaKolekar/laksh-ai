@@ -72,9 +72,9 @@ export default function GetStarted() {
 
     console.log(index);
     if (responses.length == 7) {
-      get(child(ref(database), `UserData/${user.uid}`)).then((snapshot) => {
+      get(child(ref(database), `UserData/${user.uid}/Details`)).then((snapshot) => {
         if (!snapshot.exists()) {
-          set(ref(database, "UserData/" + user.uid), structuredData).then(
+          set(ref(database, "UserData/" + user.uid + "/Details"), structuredData).then(
             () => {
               router.replace("/Dashboard");
               return <LoadingPage />;
