@@ -6,12 +6,12 @@ import { initFirebase } from "@/lib/firebase";
 import { getDatabase, ref, set, get, child } from "firebase/database";
 import { useRouter } from "next/navigation";
 import LoadingComponent from "@/components/RecommendCareerComponents/LoadingComponent";
-
-const {
-  GoogleGenerativeAI,
-  HarmCategory,
-  HarmBlockThreshold,
-} = require("@google/generative-ai");
+import { GoogleGenerativeAI } from "@google/generative-ai";
+// const {
+//   GoogleGenerativeAI,
+//   HarmCategory,
+//   HarmBlockThreshold,
+// } = require("@google/generative-ai");
 
 const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
