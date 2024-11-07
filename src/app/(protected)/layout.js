@@ -49,7 +49,7 @@ export default function Layout({ children }) {
           break;
       }
       if (user) {
-        get(child(ref(database), `UserData/${user.uid}`)).then((snapshot) => {
+        get(child(ref(database), `UserData/${user.uid}/Details`)).then((snapshot) => {
           if (!snapshot.exists()) {
             router.replace("/GetStarted");
             return <LoadingPage />;

@@ -34,7 +34,7 @@ export default function GetStarted() {
   const user = useUser();
   if (user === false) return <LoadingPage />;
   if (user) {
-    get(child(ref(database), `UserData/${user.uid}`)).then((snapshot) => {
+    get(child(ref(database), `UserData/${user.uid}/Details`)).then((snapshot) => {
       if (snapshot.exists()) {
         router.replace("/Dashboard");
         return <LoadingPage />;

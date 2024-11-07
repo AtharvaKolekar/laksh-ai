@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <main>
       <div className={styles.header}>
-        <Image src="/logo.png" alt="logo" width={60} height={35} priority/>
+        <Image src="/logo.jpg" alt="logo" width={70} height={60} priority/>
         <div className={styles.nav}>
           <Link href="#products">Products</Link>
           <Link href="/pricing">Pricing</Link>
@@ -21,7 +21,7 @@ export default function Home() {
 
           <Link href="#">
             <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
-              WonderAi
+              LakshAI
               <svg
                 fill="#ba0ffd"
                 viewBox="0 0 24 24"
@@ -61,7 +61,7 @@ export default function Home() {
           <p className={styles.title}>
             Hi I'm
             <span className={styles.ai}>
-              WonderAi
+              LakshAI
               <svg fill="#ba0ffd" viewBox="0 0 24 24">
                 <path d="M16 20L17.6 14.6L23 13L17.6 11.4L16 5.99999L14.4 11.4L9 13L14.4 14.6L16 20Z"></path>
                 <path d="M7.5 21L8.3 18.3L11 17.5L8.3 16.7L7.5 14L6.7 16.7L4 17.5L6.7 18.3L7.5 21Z"></path>
