@@ -12,11 +12,36 @@
 .btn {
     z-index: 10000;
     position: fixed;
-    bottom: 20px;
+    bottom: 30px;
+    right: 30px;
+}
+.mainModal{
+    z-index: 1000;
+    width: 100%;
+    max-width: 400px;
+    position: fixed;
     right: 20px;
+    top: 20px;
+    /* top: 50vh; */
+    /* transform: translate(0, -50%); */
 }
 .modal {
     height: 75vh;
+    overflow: auto;
+}
+
+@media screen and (max-width: 600px) {
+    .mainModal{
+        position: relative;
+        top: 0;
+        right: 0;
+        transform: translate(0, 0);
+        width: 100%;
+
+    }
+    .modal {
+        height: 60vh;
+    }
 }
 
 /* DashPage */
@@ -59,6 +84,9 @@
 }
 
 /* Careers */
+.topC{
+    /* display: none!important; */
+}
 .topCareers {
     display: flex;
     flex-direction: row;

@@ -1,7 +1,5 @@
-import Link from "next/link";
 import styles from "./page.module.css";
 import ProfileIcon from "@/components/profileIcon/ProfileIcon";
-import Image from "next/image";
 
 export default function Header(props) {
     return (

@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <main>
       <div className={styles.header}>
-        <Image src="/logo.jpg" alt="logo" width={70} height={60} priority/>
+        <Image src="/logo1.jpg" alt="logo" width={50} height={50} priority/>
         <div className={styles.nav}>
           <Link href="#products">Products</Link>
           <Link href="/pricing">Pricing</Link>
