@@ -2,7 +2,7 @@
   display: flex;
   padding: 15px 0;
   justify-content: flex-end;
-  align-items: start;
+  align-items: flex-start;
   flex-wrap: wrap;
   opacity: 0;
   animation: fadeIn 1s forwards;
