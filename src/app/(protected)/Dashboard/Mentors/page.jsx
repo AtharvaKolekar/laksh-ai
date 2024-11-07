@@ -8,6 +8,7 @@ import { initFirebase } from "@/lib/firebase";
 
 import { getDatabase, ref, set, get, child } from "firebase/database";
 import { useRouter } from "next/navigation";
+import DashboardLayout from "../page";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -30,7 +31,9 @@ export default function Dashboard() {
 
   return (
     <main>
-      <div className={styles.container}></div>
+      <DashboardLayout>
+        <div className={styles.container}></div>
+      </DashboardLayout>
     </main>
   );
 }

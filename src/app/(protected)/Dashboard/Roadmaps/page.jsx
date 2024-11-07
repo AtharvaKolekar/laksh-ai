@@ -6,6 +6,9 @@ import { initFirebase } from "@/lib/firebase";
 import { getDatabase, ref, set, get, child } from "firebase/database";
 import { useRouter } from "next/navigation";
 import LoadingComponent from "@/components/RecommendCareerComponents/LoadingComponent";
+import { Steps, Divider, Typography, List, Card, Tag } from "antd";
+const { Step } = Steps;
+const { Title, Paragraph } = Typography;
 
 const {
   GoogleGenerativeAI,
@@ -135,6 +138,7 @@ export default function Dashboard() {
 
       // Set the parsed JSON to render dynamically
       setRoadmap(roadmapData);
+
       setLoading(false);
     } catch (error) {
       console.error("Error generating roadmap:", error);
@@ -144,9 +148,6 @@ export default function Dashboard() {
   return (
     <main>
       <div className={styles.container}>
-        {/* Display user info */}
-        {user && name && <h1>Welcome, {name}!</h1>}
-
         {/* Career roadmap form */}
         <form onSubmit={handleSubmit}>
           <input
@@ -160,40 +161,7 @@ export default function Dashboard() {
 
         {/* Render roadmap dynamically if available */}
         {!loading ? (
-          roadmap && (
-            <div className={styles.roadmapContainer}>
-              <h2>{roadmap.title}</h2>
-              <p>{roadmap.description}</p>
-              <div className={styles.stepsContainer}>
-                {roadmap.steps.map((step, index) => (
-                  <div className={styles.step} key={index}>
-                    <h3>{step.title}</h3>
-                    <p>{step.description}</p>
-                    <div className={styles.skills}>
-                      {step.skills.map((skill, i) => (
-                        <span key={i} className={styles.skill}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Render Sub-Steps */}
-                    {step.sub_steps.map((subStep, j) => (
-                      <div className={styles.subStep} key={j}>
-                        <h4>{subStep.title}</h4>
-                        <p>{subStep.description}</p>
-                        <ul>
-                          {subStep.skills.map((subSkill, k) => (
-                            <li key={k}>{subSkill}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )
+          roadmap && <Roadmap roadmap={roadmap} />
         ) : (
           <LoadingComponent />
         )}
@@ -201,3 +169,51 @@ export default function Dashboard() {
     </main>
   );
 }
+
+const Roadmap = ({ roadmap }) => {
+  const [current, setCurrent] = useState(0);
+
+  const onChange = (value) => {
+    setCurrent(value);
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <Title level={2}>{roadmap.title}</Title>
+      <Paragraph>{roadmap.description}</Paragraph>
+
+      {/* Main Steps */}
+      <Steps current={current} onChange={onChange} direction="horizontal">
+        {roadmap.steps.map((step, index) => (
+          <Step key={index} title={step.title} />
+        ))}
+      </Steps>
+
+      <Divider />
+
+      {/* Step Content */}
+      <div style={{ marginTop: "20px" }}>
+        <Title level={3}>{roadmap.steps[current].title}</Title>
+        <Paragraph>{roadmap.steps[current].description}</Paragraph>
+
+        <Title level={5}>Skills you'll learn</Title>
+        {roadmap.steps[current].skills.map((s) => (
+          <Tag color="processing">{s}</Tag>
+        ))}
+
+        <Divider />
+
+        <Title level={4}>Sub-Steps</Title>
+        {roadmap.steps[current].sub_steps.map((subStep, idx) => (
+          <Card key={idx} style={{ marginBottom: "10px" }}>
+            <Title level={5}>{subStep.title}</Title>
+            <Paragraph>{subStep.description}</Paragraph>
+            {subStep.skills.map((s) => (
+              <Tag color="green">{s}</Tag>
+            ))}
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+};

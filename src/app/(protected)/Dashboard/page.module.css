@@ -9,3 +9,12 @@
     flex-direction: column;
     padding-bottom: 300px;
   }
+  .btn{
+    z-index: 1;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+  .modal{
+    height: 58vh;
+  }
