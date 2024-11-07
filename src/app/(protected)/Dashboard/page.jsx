@@ -1,15 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
-
 import { signOut, useUser } from "@/lib/auth";
 import { initFirebase } from "@/lib/firebase";
-
 import { getDatabase, ref, set, get, child } from "firebase/database";
 import { useRouter } from "next/navigation";
 import { Button, Modal, Empty, Typography, Steps } from "antd";
-
-
 
 const progresses = [
     {

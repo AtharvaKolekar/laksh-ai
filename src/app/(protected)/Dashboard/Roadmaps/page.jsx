@@ -9,12 +9,8 @@ import LoadingComponent from "@/components/RecommendCareerComponents/LoadingComp
 import { Steps, Divider, Typography, List, Card, Tag } from "antd";
 const { Step } = Steps;
 const { Title, Paragraph } = Typography;
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const {
-  GoogleGenerativeAI,
-  HarmCategory,
-  HarmBlockThreshold,
-} = require("@google/generative-ai");
 
 const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);

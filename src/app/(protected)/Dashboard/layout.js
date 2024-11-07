@@ -9,7 +9,7 @@ import Typewriter from "typewriter-effect";
 import MessageContainer from "@/components/messageContainer/MessageContainer";
 import MessageRight from "@/components/messageContainer/MessageRight";
 import MessageLeft from "@/components/messageContainer/MessageLeft";
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const { Search } = Input;
 
