@@ -10,7 +10,18 @@
   padding: 10px 15px;
   font-size: var(--f2);
   font-weight: 500;
+  margin-bottom: 5px;
   color: #444;
+}
+.right{
+  right: 10px;
+  border-bottom-right-radius:0px;
+  border-color: #8337fe14;
+}
+.left{
+  border-bottom-left-radius:0;
+  background-color: #6100ff8c;
+  color: white;
 }
 
 .input {

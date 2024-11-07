@@ -16,7 +16,7 @@
     right: 20px;
 }
 .modal {
-    height: 58vh;
+    height: 75vh;
 }
 
 /* DashPage */
@@ -144,3 +144,9 @@
         max-width: 100%;
     }
 }
+
+  .ant-input-search-button {
+    background-color:  #6100ff8c; /* Button background color */
+    color: white;              /* Button text/icon color */
+    border-color: #6100ff8c;
+  }
