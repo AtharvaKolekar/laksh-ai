@@ -131,7 +131,7 @@ export default function Dashboard() {
   }, [user, database]);
 
   const handleSubmit = async (i, e) => {
-    if (e) e.preventDefault();
+    // if (e) e.preventDefault();
     setLoading(true);
     try {
       const chatSession = model.startChat({
@@ -171,13 +171,14 @@ export default function Dashboard() {
           }}
         >
           <h2 style={{ textAlign: "center", fontSize: "2rem" }}>
-            Tell us what you're aspiring to be
+            Tell us what you&apos;re aspiring to be
           </h2>
           <p
             style={{
               textAlign: "center",
               fontSize: "1rem",
               marginBottom: "2rem",
+              padding: "0 2rem",
             }}
           >
             Fill in the career name you're aspiring for, and let us help guide
@@ -185,11 +186,11 @@ export default function Dashboard() {
           </p>
 
           {/* Search bar with submit button */}
-          <form
-            onSubmit={(e) => handleSubmit(input, e)}
+          <div
+            // onSubmit={(e) => handleSubmit(input, e)}
             style={{ textAlign: "center" }}
           >
-            <Input
+            {/* <Input
               type="text"
               placeholder="Enter career name"
               value={input}
@@ -198,8 +199,25 @@ export default function Dashboard() {
             />
             <Button type="primary" htmlType="submit" style={{ height: "40px" }}>
               Submit
-            </Button>
-          </form>
+            </Button> */}
+            <Input.Search 
+                placeholder="Enter career name"
+                allowClear
+                enterButton="Submit"
+                size="large"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onSearch={(e) => handleSubmit(input, e)}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSubmit(input, e)
+                    }
+                }}
+                style={{ width: "100%", maxWidth: 800, padding: "0 1.5rem", }}
+
+            />
+            
+          </div>
         </div>
 
         {/* Render roadmap dynamically if available */}
@@ -226,7 +244,7 @@ const Roadmap = ({ roadmap }) => {
       <Paragraph>{roadmap.description}</Paragraph>
 
       {/* Main Steps */}
-      <Steps current={current} onChange={onChange} direction="horizontal">
+      <Steps current={current} onChange={onChange} direction="vertical">
         {roadmap.steps.map((step, index) => (
           <Step key={index} title={step.title} />
         ))}
