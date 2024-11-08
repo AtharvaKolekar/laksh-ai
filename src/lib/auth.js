@@ -9,7 +9,7 @@ import {
   onAuthStateChanged
 } from "firebase/auth"
 
-import { auth } from "@/lib/firebase"
+import { auth } from "@/lib/firebase.js"
 
 
 const GoogleProvider = new GoogleAuthProvider();

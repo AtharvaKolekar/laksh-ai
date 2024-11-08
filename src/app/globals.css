@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
   --color-bg: #ffffff;
   --color-bg2: #151c35;
@@ -21,6 +24,10 @@
   --pad-half: 0.875rem;
   --pad-quarter: 0.4375rem;
 
+}
+/* Add this to your global CSS file or inline styles */
+.CodeMirror {
+  height: 400px; /* You can adjust the height */
 }
 
 * {
