@@ -23,7 +23,7 @@ export default function LoadingComponent({ onFinish }) {
     }, 4000);
 
     return () => clearTimeout(timeout);
-  }, [step]);
+  }, [step, steps.length, onFinish]);
 
   return (
     <div className={styles.loadingContainer}>

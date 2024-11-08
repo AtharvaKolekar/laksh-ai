@@ -85,8 +85,8 @@ function MainScreen({ isVisible, callback, isBooked, bookedData, date, duration,
                 <img src="/meet.webp" alt="meet" />
                 <div className={styles.bookingContent}>    
                     <h3>Meeting Scheduled</h3>
-                    <p>{date}Thursday, November 21, 2024</p>
-                    <p>{duration}7:30 PM - 9:30 PM (India Standard Time)</p>
+                    <p>{date}</p>
+                    <p>{duration}</p>
                     <Button type="primary" size="middle" onClick={() => window.open(meetingUrl, "_blank")}><strong>Join Meeting <ExportOutlined /></strong></Button>
                 </div>
             </div>

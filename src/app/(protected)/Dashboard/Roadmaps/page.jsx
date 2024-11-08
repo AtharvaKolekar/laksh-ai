@@ -194,7 +194,7 @@ const Roadmap = ({ roadmap }) => {
 
         <Title level={5}>Skills you'll learn</Title>
         {roadmap.steps[current].skills.map((s) => (
-          <Tag color="processing">{s}</Tag>
+          <Tag key={s} color="processing">{s}</Tag>
         ))}
 
         <Divider />
@@ -205,7 +205,7 @@ const Roadmap = ({ roadmap }) => {
             <Title level={5}>{subStep.title}</Title>
             <Paragraph>{subStep.description}</Paragraph>
             {subStep.skills.map((s) => (
-              <Tag color="green">{s}</Tag>
+              <Tag key={s} color="green">{s}</Tag>
             ))}
           </Card>
         ))}

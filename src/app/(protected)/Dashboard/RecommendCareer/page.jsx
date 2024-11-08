@@ -157,7 +157,7 @@ export default function RecommendCareer() {
 
     myFun();
     return () => {};
-  }, [page, show]);
+  }, [page, show, response, responses]);
 
   return <>{currentQuestion}</>;
 }
