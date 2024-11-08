@@ -7,6 +7,7 @@ import { getDatabase, ref, set, get, child } from "firebase/database";
 import { useRouter } from "next/navigation";
 import LoadingComponent from "@/components/RecommendCareerComponents/LoadingComponent";
 import { Steps, Divider, Typography, List, Card, Tag } from "antd";
+import { Input, Button, Row, Col } from "antd";
 const { Step } = Steps;
 const { Title, Paragraph } = Typography;
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -150,20 +151,56 @@ export default function Dashboard() {
       console.error("Error generating roadmap:", error);
     }
   };
-
+  const suggestedCareers = [
+    "Software Developer",
+    "Data Scientist",
+    "Machine Learning Engineer",
+    "Web Developer",
+    "Product Manager",
+  ];
   return (
     <main>
       <div className={styles.container}>
         {/* Career roadmap form */}
-        <form onSubmit={(e) => handleSubmit(input, e)}>
-          <input
-            type="text"
-            placeholder="Enter career name"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <button type="submit">Submit</button>
-        </form>
+        <div
+          style={{
+            height: "30vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <h2 style={{ textAlign: "center", fontSize: "2rem" }}>
+            Tell us what you're aspiring to be
+          </h2>
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: "1rem",
+              marginBottom: "2rem",
+            }}
+          >
+            Fill in the career name you're aspiring for, and let us help guide
+            you!
+          </p>
+
+          {/* Search bar with submit button */}
+          <form
+            onSubmit={(e) => handleSubmit(input, e)}
+            style={{ textAlign: "center" }}
+          >
+            <Input
+              type="text"
+              placeholder="Enter career name"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              style={{ width: "60%", marginRight: "1rem" }}
+            />
+            <Button type="primary" htmlType="submit" style={{ height: "40px" }}>
+              Submit
+            </Button>
+          </form>
+        </div>
 
         {/* Render roadmap dynamically if available */}
         {!loading ? (
