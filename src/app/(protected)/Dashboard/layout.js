@@ -200,7 +200,7 @@ export default function Layout({ children }) {
                 <div className={styles.modal} ref={containerRef}>
                     {(!loading || isGreeted) && (
                         <MessageLeft
-                            text={"Welcome to LakshAI. How can I help you?"}
+                            text={"Hello there👋 I'm LakshAI your personal AI Mentor ✨ How can I help you today?"}
                             callback={() => setIsGreeted(true)}
                         />
                     )}

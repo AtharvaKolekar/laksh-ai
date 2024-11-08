@@ -181,7 +181,7 @@ export default function Dashboard() {
               padding: "0 2rem",
             }}
           >
-            Fill in the career name you're aspiring for, and let us help guide
+            Fill in the career name you&apos;re aspiring for, and let us help guide
             you!
           </p>
 
