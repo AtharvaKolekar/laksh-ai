@@ -3,7 +3,7 @@
   max-width: 850px;
   margin: 0 auto;
   height: 100%;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 1.5rem 3rem;
   text-align: left;
 
   --rc1: #647eff;
@@ -88,7 +88,7 @@
 }
 
 .sec {
-
+  user-select: none;
   background-color: #f6f6f6;
   padding: 14px 21px;
   margin: 15px 0;

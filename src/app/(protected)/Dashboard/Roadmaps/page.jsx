@@ -120,7 +120,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (user) {
       console.log(user);
-      get(child(ref(database), `UserData/${user.uid}`)).then((snapshot) => {
+      get(child(ref(database), `UserData/${user.uid}/a`)).then((snapshot) => {
         if (snapshot.exists()) {
           setName(snapshot.val().name);
         } else {

@@ -26,13 +26,13 @@ export default function LoadingComponent({ result, onClick }) {
           🚩 Careers you also might be interested
         </p>
         <div className={styles.otherCareers}>
-          <div onClick={() => router.push("/Dashboard/Roadmap?career=" + result[1]) } className={styles.sec + " " + styles.a} >
+          <div onClick={() => router.push("/Dashboard/Roadmaps?career=" + result[1]) } className={styles.sec + " " + styles.a} >
             <p>{result[1]}</p>
           </div>
-          <div onClick={() => router.push("/Dashboard/Roadmap?career=" + result[2]) } className={styles.sec + " " + styles.b}>
+          <div onClick={() => router.push("/Dashboard/Roadmaps?career=" + result[2]) } className={styles.sec + " " + styles.b}>
             <p>{result[2]}</p>
           </div>
-          <div onClick={() => router.push("/Dashboard/Roadmap?career=" + result[3]) } className={styles.sec + " " + styles.c}>
+          <div onClick={() => router.push("/Dashboard/Roadmaps?career=" + result[3]) } className={styles.sec + " " + styles.c}>
             <p>{result[3]}</p>
           </div>
         </div>
@@ -41,7 +41,7 @@ export default function LoadingComponent({ result, onClick }) {
         <button onClick={onClick}>Generate Again</button>
       </div>
       <div className={styles.continueRoadmap}>
-        <button onClick={() => router.push("/Dashboard/Roadmap?career=" + result[0]) }>Continue to Roadmap</button>
+        <button onClick={() => router.push("/Dashboard/Roadmaps?career=" + result[0]) }>Continue to Roadmap</button>
       </div>
     </div>
   );
