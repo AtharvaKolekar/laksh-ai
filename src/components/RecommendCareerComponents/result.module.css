@@ -12,6 +12,7 @@
 }
 .container p{
   margin: 0;
+  font-size: 1.1rem;
 }
 .ai {
   display: flex;
@@ -92,7 +93,7 @@
   padding: 14px 21px;
   margin: 15px 0;
   border-radius: 5px;
-
+  cursor: pointer;
   max-width: 360px;
   opacity: 0;
   animation: fadeIn 1s ease forwards;
@@ -102,6 +103,9 @@
     rgba(42, 51, 70, 0.04) 0px 6px 6px -3px,
     rgba(14, 63, 126, 0.04) 0px 12px 12px -6px,
     rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
+}
+.sec:hover{
+  transform: scale(1.03);
 }
 
 .a {
@@ -134,6 +138,20 @@
 }
 
 .generateAgain button {
+  padding: 10px 15px;
+  background-color: #5470fe;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 5.3s;
+  border: #5470fe 1.2px solid;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.continueRoadmap button {
   padding: 10px 15px;
   background-color: #fff;
   color: #5470fe;
