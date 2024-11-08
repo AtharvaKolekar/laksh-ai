@@ -25,11 +25,9 @@ export default function Layout({ children }) {
     useEffect(() => {
         // Auto scroll to bottom on load
         if (containerRef.current) {
-          containerRef.current.scrollTop = containerRef.current.scrollHeight;
+            containerRef.current.scrollTop = containerRef.current.scrollHeight;
         }
-      }, [messages, isTyping]);
-
-    
+    }, [messages, isTyping]);
 
     const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
     const genAI = new GoogleGenerativeAI(apiKey);
@@ -65,7 +63,7 @@ export default function Layout({ children }) {
     };
     const handleSendMessage = async () => {
         setLoading(true);
-        setIsTyping(true)
+        setIsTyping(true);
         setUserInput("");
         const chatSession = model.startChat({
             generationConfig,
@@ -103,7 +101,6 @@ export default function Layout({ children }) {
         // Ensure messages state is updated correctly to trigger re-render
         setMessages(newMessages);
 
-
         // Handle function call if available
         if (
             parsedResponse.functionCalling &&
@@ -121,37 +118,40 @@ export default function Layout({ children }) {
     };
 
     const showLoading = () => {
-        setOpen(open => !open);
+        setOpen((open) => !open);
         if (isGreeted) return;
         setLoading(true);
         setTimeout(() => {
             setLoading(false);
         }, 1000);
-
     };
     return (
         <div>
             {children}
             <Button
                 className={styles.btn}
-                icon={ <img src="/bot.png" width={80} height={80} alt="gemini" />}
+                icon={
+                    <img src="/bot.png" width={80} height={80} alt="gemini" />
+                }
                 onClick={showLoading}
             />
             <Modal
                 className={styles.mainModal}
                 title={
-                    <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
-                    Welcome to LakshAI
-                    <svg
-                      fill="#ba0ffd"
-                      viewBox="0 0 24 24"
-                      width="20"
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "3px",
+                        }}
                     >
-                      <path d="M16 20L17.6 14.6L23 13L17.6 11.4L16 5.99999L14.4 11.4L9 13L14.4 14.6L16 20Z"></path>
-                      <path d="M7.5 21L8.3 18.3L11 17.5L8.3 16.7L7.5 14L6.7 16.7L4 17.5L6.7 18.3L7.5 21Z"></path>
-                      <path d="M7.5 10.8L8.07143 8.87142L10 8.29999L8.07143 7.72856L7.5 5.79999L6.92857 7.72856L5 8.29999L6.92857 8.87142L7.5 10.8Z"></path>
-                    </svg>
-                  </div>
+                        Welcome to LakshAI
+                        <svg fill="#ba0ffd" viewBox="0 0 24 24" width="20">
+                            <path d="M16 20L17.6 14.6L23 13L17.6 11.4L16 5.99999L14.4 11.4L9 13L14.4 14.6L16 20Z"></path>
+                            <path d="M7.5 21L8.3 18.3L11 17.5L8.3 16.7L7.5 14L6.7 16.7L4 17.5L6.7 18.3L7.5 21Z"></path>
+                            <path d="M7.5 10.8L8.07143 8.87142L10 8.29999L8.07143 7.72856L7.5 5.79999L6.92857 7.72856L5 8.29999L6.92857 8.87142L7.5 10.8Z"></path>
+                        </svg>
+                    </div>
                 }
                 footer={
                     <Search
@@ -163,21 +163,23 @@ export default function Layout({ children }) {
                         onChange={(e) => setUserInput(e.target.value)}
                         onSearch={handleSendMessage}
                         disabled={isTyping}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                handleSendMessage();
+                            }
+                        }}
                     />
                 }
                 open={open}
                 onCancel={() => setOpen(false)}
             >
-
-
-                <div className={styles.modal}  ref={containerRef}>
-                {(!loading || isGreeted) &&  (
-                    <MessageLeft
-                        text={"Welcome to LakshAI. How can I help you?"}
-                        callback={() => setIsGreeted(true)}
-                    />
-                    
-                )}
+                <div className={styles.modal} ref={containerRef}>
+                    {(!loading || isGreeted) && (
+                        <MessageLeft
+                            text={"Welcome to LakshAI. How can I help you?"}
+                            callback={() => setIsGreeted(true)}
+                        />
+                    )}
                     {messages.map((message, index) => {
                         if (message.role === "user") {
                             return (
@@ -201,7 +203,6 @@ export default function Layout({ children }) {
                     })}
                     {loading ? <Skeleton active /> : null}
                 </div>
-
             </Modal>
         </div>
     );
