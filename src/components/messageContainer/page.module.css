@@ -14,11 +14,16 @@
   color: #444;
 }
 .right{
-  right: 10px;
+  right: 0px;
   border-bottom-right-radius:0px;
   border-color: #8337fe14;
+  align-self: flex-end;
+  max-width: 65%;
+  
 }
 .left{
+  align-self: flex-start;
+  max-width: 75%;
   border-bottom-left-radius:0;
   background-color: #6100ff8c;
   color: white;

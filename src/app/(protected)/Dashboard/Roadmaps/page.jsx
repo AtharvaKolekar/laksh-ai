@@ -7,10 +7,11 @@ import { getDatabase, ref, set, get, child } from "firebase/database";
 import { useRouter } from "next/navigation";
 import LoadingComponent from "@/components/RecommendCareerComponents/LoadingComponent";
 import { Steps, Divider, Typography, List, Card, Tag } from "antd";
+import { Input, Button, Row, Col } from "antd";
 const { Step } = Steps;
 const { Title, Paragraph } = Typography;
 import { GoogleGenerativeAI } from "@google/generative-ai";
-
+import { useSearchParams } from "next/navigation";
 
 const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
@@ -96,7 +97,6 @@ const generationConfig = {
 };
 
 export default function Dashboard() {
-  const router = useRouter();
   const app = initFirebase();
   const database = getDatabase(app);
   const user = useUser();
@@ -105,6 +105,17 @@ export default function Dashboard() {
   const [roadmap, setRoadmap] = useState(null); // Store the result
   const [name, setName] = useState(""); // Store user's name
   const [loading, setLoading] = useState(false);
+
+  const searchParams = useSearchParams(); // Default to empty string if not found
+
+  useEffect(() => {
+    const career = searchParams.get("career") || ""; // Get 'career' query param
+    console.log("Career:", career); // Log the career parameter
+    if (career) {
+      setInput(career);
+      handleSubmit(career); // Call handleSubmit if needed
+    }
+  }, [searchParams]); // Runs when 'career' changes
 
   useEffect(() => {
     if (user) {
@@ -119,8 +130,8 @@ export default function Dashboard() {
     }
   }, [user, database]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (i, e) => {
+    if (e) e.preventDefault();
     setLoading(true);
     try {
       const chatSession = model.startChat({
@@ -128,7 +139,7 @@ export default function Dashboard() {
         history: [],
       });
 
-      const result = await chatSession.sendMessage(input);
+      const result = await chatSession.sendMessage(i);
       const responseText = await result.response.text();
       const roadmapData = JSON.parse(responseText); // Assuming the response is a valid JSON string.
 
@@ -140,20 +151,56 @@ export default function Dashboard() {
       console.error("Error generating roadmap:", error);
     }
   };
-
+  const suggestedCareers = [
+    "Software Developer",
+    "Data Scientist",
+    "Machine Learning Engineer",
+    "Web Developer",
+    "Product Manager",
+  ];
   return (
     <main>
       <div className={styles.container}>
         {/* Career roadmap form */}
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Enter career name"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <button type="submit">Submit</button>
-        </form>
+        <div
+          style={{
+            height: "30vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <h2 style={{ textAlign: "center", fontSize: "2rem" }}>
+            Tell us what you're aspiring to be
+          </h2>
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: "1rem",
+              marginBottom: "2rem",
+            }}
+          >
+            Fill in the career name you're aspiring for, and let us help guide
+            you!
+          </p>
+
+          {/* Search bar with submit button */}
+          <form
+            onSubmit={(e) => handleSubmit(input, e)}
+            style={{ textAlign: "center" }}
+          >
+            <Input
+              type="text"
+              placeholder="Enter career name"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              style={{ width: "60%", marginRight: "1rem" }}
+            />
+            <Button type="primary" htmlType="submit" style={{ height: "40px" }}>
+              Submit
+            </Button>
+          </form>
+        </div>
 
         {/* Render roadmap dynamically if available */}
         {!loading ? (
