@@ -10,7 +10,7 @@ import { Steps, Divider, Typography, List, Card, Tag } from "antd";
 const { Step } = Steps;
 const { Title, Paragraph } = Typography;
 import { GoogleGenerativeAI } from "@google/generative-ai";
-
+import { useSearchParams } from "next/navigation";
 
 const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
@@ -96,7 +96,6 @@ const generationConfig = {
 };
 
 export default function Dashboard() {
-  const router = useRouter();
   const app = initFirebase();
   const database = getDatabase(app);
   const user = useUser();
@@ -105,6 +104,17 @@ export default function Dashboard() {
   const [roadmap, setRoadmap] = useState(null); // Store the result
   const [name, setName] = useState(""); // Store user's name
   const [loading, setLoading] = useState(false);
+
+  const searchParams = useSearchParams(); // Default to empty string if not found
+
+  useEffect(() => {
+    const career = searchParams.get("career") || ""; // Get 'career' query param
+    console.log("Career:", career); // Log the career parameter
+    if (career) {
+      setInput(career);
+      handleSubmit(career); // Call handleSubmit if needed
+    }
+  }, [searchParams]); // Runs when 'career' changes
 
   useEffect(() => {
     if (user) {
@@ -119,8 +129,8 @@ export default function Dashboard() {
     }
   }, [user, database]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (i, e) => {
+    if (e) e.preventDefault();
     setLoading(true);
     try {
       const chatSession = model.startChat({
@@ -128,7 +138,7 @@ export default function Dashboard() {
         history: [],
       });
 
-      const result = await chatSession.sendMessage(input);
+      const result = await chatSession.sendMessage(i);
       const responseText = await result.response.text();
       const roadmapData = JSON.parse(responseText); // Assuming the response is a valid JSON string.
 
@@ -145,7 +155,7 @@ export default function Dashboard() {
     <main>
       <div className={styles.container}>
         {/* Career roadmap form */}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => handleSubmit(input, e)}>
           <input
             type="text"
             placeholder="Enter career name"
