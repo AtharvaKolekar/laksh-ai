@@ -243,6 +243,10 @@ const Roadmap = ({ roadmap }) => {
       <Title level={2}>{roadmap.title}</Title>
       <Paragraph>{roadmap.description}</Paragraph>
 
+      <Title level={4}>Certified Courses:</Title>
+      <Button style={{ padding: "10px 10px", marginRight: "10px", marginBottom: "20px" }} onClick={() => window.open("/resource?q=Coursera:+" + roadmap.title, "_blank")} color="default">Coursera</Button>
+      <Button style={{ padding: "10px 10px", marginRight: "10px", marginBottom: "20px"}}  onClick={() => window.open("/resource?q=Udemy:+" + roadmap.title, "_blank")} color="default">Udemy</Button>
+
       {/* Main Steps */}
       <Steps current={current} onChange={onChange} direction="vertical">
         {roadmap.steps.map((step, index) => (
@@ -259,7 +263,7 @@ const Roadmap = ({ roadmap }) => {
 
         <Title level={5}>Skills you'll learn</Title>
         {roadmap.steps[current].skills.map((s) => (
-          <Tag key={s} color="processing">{s}</Tag>
+          <Tag style={{ padding: "3px 6px", }} key={s} color="processing">{s}</Tag>
         ))}
 
         <Divider />
@@ -270,8 +274,13 @@ const Roadmap = ({ roadmap }) => {
             <Title level={5}>{subStep.title}</Title>
             <Paragraph>{subStep.description}</Paragraph>
             {subStep.skills.map((s) => (
-              <Tag key={s} color="green">{s}</Tag>
+              <Tag style={{ padding: "3px 6px", }} key={s} color="green">{s}</Tag>
             ))}
+            <Title style={{ marginTop: 10 }} level={5}>Resources:</Title>
+            <Tag style={{ cursor: "pointer", padding: "3px 6px", }} onClick={() => window.open("/resource?q=W3schools:+" + subStep.title, "_blank")} color="gold">W3Schools</Tag>
+            <Tag style={{ cursor: "pointer", padding: "3px 6px"}}  onClick={() => window.open("/resource?q=TutorialsPoint:+" + subStep.title, "_blank")} color="gold">TutorialsPoint</Tag>
+            <Tag style={{ cursor: "pointer", padding: "3px 6px"}}  onClick={() => window.open("/resource?q=GeeksforGeeks:+" + subStep.title, "_blank")} color="gold">GeeksforGeeks</Tag>
+            <Tag style={{ cursor: "pointer", padding: "3px 6px"}}  onClick={() => window.open("/resource?q=:+" + subStep.title, "_blank")} color="gold">Go Smart</Tag>
           </Card>
         ))}
       </div>
