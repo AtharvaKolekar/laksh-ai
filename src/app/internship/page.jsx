@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation';
 import { getDatabase, ref, get } from 'firebase/database';
 import { useUser } from '@/lib/auth'; // Assuming you have an authentication context or hook for the user
 
+import "@/app/virtual.css"
+
 const Page = () => {
   const router = useRouter();
   const user = useUser(); // Get the user object from your auth context

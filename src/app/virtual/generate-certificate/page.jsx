@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { getDatabase, ref, get, update } from "firebase/database";  // Import necessary functions from Realtime Database
 import { database } from "@/lib/firebase";
 import { useUser } from "@/lib/auth";
+import "@/app/virtual.css"
 
 const GenerateCertificate = () => {
   const router = useRouter();

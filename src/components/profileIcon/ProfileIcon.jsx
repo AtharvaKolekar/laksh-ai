@@ -56,6 +56,13 @@ export default function ProfileIcon({ logout }) {
                         </Link>
                     </li>
                     <li>
+                        <Link href="/Projects">
+                            <button>
+                                <span>Projects</span>
+                            </button>
+                        </Link>
+                    </li>
+                    <li>
                         <Link href="/Dashboard/Mentors">
                             <button>
                                 <span>Mentors</span>

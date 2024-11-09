@@ -6,6 +6,7 @@ import { database } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { ref, set, push, get } from "firebase/database";
 
+import "@/app/virtual.css"
 import LoadingComponent from "../RecommendCareerComponents/LoadingComponent";
 function VirtualInternship() {
   const user = useUser();
