@@ -1,7 +1,8 @@
+"use client"
 import React, { useEffect, useState } from "react";
 import { useUser } from "@/lib/auth";
 import { database } from "@/lib/firebase";
-import { ref, get, set } from "firebase/database";
+import { ref, get, set, update } from "firebase/database";
 import axios from "axios";
 import {
   Button,
@@ -19,8 +20,7 @@ import Editor from "@monaco-editor/react";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/lib/codemirror.css"; // Import CodeMirror styles
 import "codemirror/theme/material.css"; // Import the chosen theme
-import { GoogleAIFileManager } from "@google/generative-ai/server";
-const fileManager = new GoogleAIFileManager(process.env.NEXT_PUBLIC_GOOGLE_API_KEY);
+import { useRouter } from "next/navigation";
 const { Step } = Steps;
 
 const IncompleteInternshipPage = () => {
@@ -74,7 +74,37 @@ const IncompleteInternshipPage = () => {
       fetchInternship();
     }
   }, [user, uid]);
+  const router = useRouter()
+  useEffect(() => {
+    console.log("internshipData", internshipData);
+    if (internshipData) {
 
+      const isLastPhase = internshipData.completedPhases.length === internshipData.phases.length;
+      console.log(isLastPhase);
+      if (isLastPhase&&internshipData.internshipKey) {
+        // Navigate to the certificate generation route
+        console.log("internshipKey", internshipData.internshipKey);
+        const url = `/virtual/generate-certificate?internshipKey=${internshipData.internshipKey}`;
+      
+      // Navigate to the URL with query parameter
+      router.push(url);
+      }
+    }
+  }, [internshipData, router]);
+  const handleRouting = () => {
+    const isLastPhase = internshipData.completedPhases.length === phases.length;
+    
+    if (isLastPhase && evaluationResponse.score > 50) {
+      // Navigate to the certificate generation route
+      const url = `/virtual/generate-certificate?internshipKey=${internshipData.internshipKey}`;
+      
+      // Navigate to the URL with query parameter
+      router.push(url);
+    } else {
+      // Reload page if not the last phase or the score condition isn't met
+      window.location.reload();
+    }
+  };
   // Check if task data exists for the current phase when internshipData is loaded
   useEffect(() => {
     if (internshipData) {
@@ -105,6 +135,7 @@ const IncompleteInternshipPage = () => {
   // Function to fetch task from API and store it in Firebase
   async function fetchTaskFromAPIAndSave(internshipKey, phaseIndex) {
     try {
+      console.log(internshipKey, phaseIndex);
       if (
         !internshipData ||
         !internshipData.phases ||
@@ -142,9 +173,7 @@ const IncompleteInternshipPage = () => {
     setUserResponse(value); // Store the user's response
   };
 
-  // Function to handle file upload for screenshot
   const handleFileUpload = async (file) => {
-    // Create a FormData object to hold the file
     const formData = new FormData();
     formData.append('file', file);
   
@@ -152,7 +181,7 @@ const IncompleteInternshipPage = () => {
       // Send the file to the server using axios POST request
       const response = await axios.post('/api/virtual-internship/evaluate-image', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // Make sure the content type is multipart/form-data
+          'Content-Type': 'multipart/form-data',
         },
       });
   
@@ -166,9 +195,7 @@ const IncompleteInternshipPage = () => {
       console.error('Error uploading file:', error);
       message.error('Error uploading file.');
     }
-    return false;
   };
-
   if (loading) {
     return <Spin size="large" className="spinner" />;
   }
@@ -204,7 +231,7 @@ const IncompleteInternshipPage = () => {
   
   const phases = internshipData.phases || [];
   const steps = phases.map((phase, index) => {
-    const isCompleted = internshipData.completedPhases.includes(index);
+    const isCompleted = internshipData.completedPhases==index
     const isNextPhase = index === internshipData.completedPhases.length;
     const phaseStatus = isCompleted
       ? "finish"
@@ -221,27 +248,32 @@ const IncompleteInternshipPage = () => {
   const handleEditorChange = (value) => {
     setUserResponse(value); // Update the state with the new value from Monaco Editor
   };
-
+  
   const handleTaskSubmission = async () => {
     try {
       const taskType = currentPhaseTask?.taskType;
       if (taskType === "WRITTEN_EXPLANATION"||taskType=="CODE_SUBMISSION") {
        const response =  await axios.post("/api/virtual-internship/evaluate-text", { userResponse, taskDescription:currentPhaseTask.task });
+      console.log("data",response.data);
        if(response.status==200){
+        
         setIsEvaluated(true);
-        console.log("data",response.data);
         setEvaluationResponse(response.data)
         console.log(`UserData/${uid}/internships/${internshipData.internshipKey}`);
-        const internshipRef = ref(
-          database,
-          `UserData/${uid}/internships/${internshipData.internshipKey}`
-        );
-
-        // Increment completed phases and store evaluation result
-        await update(internshipRef, {
-          completedPhases: [...internshipData.completedPhases, internshipData.completedPhases.length],
-          [`phases/${internshipData.completedPhases.length}/evaluation`]: response.data,
-        });
+        console.log("status", response.data);
+        if(response.data.score>50){
+          console.log("hello");
+          const internshipRef = ref(
+            database,
+            `UserData/${uid}/internships/${internshipData.internshipKey}/completedPhases`
+          );
+          console.log(internshipData);
+          // Increment completed phases and store evaluation result
+          await set(internshipRef, 
+            [...internshipData.completedPhases, internshipData.completedPhases.length]
+          );
+        }
+      
        }
       } else if (taskType === "SCREENSHOT_UPLOAD" || taskType === "CODE_ANALYSIS_OUTPUT") {
         await axios.post("/api/virtual-internship/evaluate-image", { file: userResponse, taskDescription: currentPhaseTask.task });
@@ -336,12 +368,14 @@ const IncompleteInternshipPage = () => {
 
               {/* Render Input Field Based on Task Type */}
               {currentPhaseTask.taskType === "WRITTEN_EXPLANATION" && (
-                <Input.TextArea
-                  rows={4}
-                  value={userResponse}
-                  onChange={(e) => handleUserInput(e.target.value)}
-                  placeholder="Write your explanation here"
-                />
+                <div> <Input.TextArea
+                rows={4}
+                value={userResponse}
+                onChange={(e) => handleUserInput(e.target.value)}
+                placeholder="Write your explanation here"
+              />
+              <button onClick={()=>handleTaskSubmission()}>Submit</button></div>
+               
               )}
 
               {currentPhaseTask.taskType === "SCREENSHOT_UPLOAD" && (
@@ -391,6 +425,11 @@ const IncompleteInternshipPage = () => {
           <div><strong>Score:</strong> {evaluationResponse.score}</div>
           <div><strong>Feedback:</strong> {evaluationResponse.feedback}</div>
           <div><strong>Issues or Improvements:</strong> {evaluationResponse.issuesOrImprovement}</div>
+          <Button onClick={handleRouting}>
+              {(internshipData.completedPhases.length === phases.length-1)&&(internshipData.score>50)
+                ? "Generate Certificate"
+                : "Continue"}
+            </Button>
         </div>
       )}
     </div>

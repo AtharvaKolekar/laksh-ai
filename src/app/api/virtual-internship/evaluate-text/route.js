@@ -18,17 +18,23 @@ const generationConfig = {
     type: "object",
     properties: {
       score: {
-        type: "integer",
+        type: "integer"
       },
       feedback: {
-        type: "string",
+        type: "string"
       },
       issuesOrImprovement: {
-        type: "string",
-      },
+        type: "string"
+      }
     },
+    required: [
+      "score",
+      "feedback",
+      "issuesOrImprovement"
+    ]
   },
 };
+;
 
 export async function POST(request) {
   try {
@@ -57,6 +63,7 @@ export async function POST(request) {
     Issues or Mistakes: Identify any inaccuracies, gaps, or areas needing improvement. If the response is complete and accurate, acknowledge this with positive feedback.
 
     Suggestions for Improvement: Recommend specific improvements for clarity, depth, or correctness. If the response is already of high quality, provide encouraging feedback to reinforce good practices.
+    All three properties are required
     `;
 
     const chatSession = model.startChat({

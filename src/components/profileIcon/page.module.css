@@ -57,6 +57,7 @@
     display: inline-block;
     text-rendering: optimizeLegibility;
     position: relative;
+    
 
   }
   
@@ -102,7 +103,7 @@
     right: var(--nav-position-right);
     transition: var(--burger-transition);
     margin-top: 10px;
-    width: 150px;
+    width: 12rem;
   }
   
   .popup_window legend {

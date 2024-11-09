@@ -12,7 +12,7 @@ function VirtualInternship() {
   const [internshipData, setInternshipData] = useState(null);
   const [newInternship, setNewInternship] = useState(true);
   const internshipRef = ref(database, `UserData/${uid}/internships`);
-
+let incompleteInternship = null;
 
   async function addInternship(internshipData) {
     try {
@@ -59,13 +59,12 @@ function VirtualInternship() {
     async function sendRequest() {
       try {
         const internshipDataFromFirebase = await loadInternshipData();
-        const incompleteInternship = Object.values(internshipDataFromFirebase).find(
-            (internship) => internship.internshipComplete === false
-          );
-          
-          console.log("Incomplete internship:", incompleteInternship);
-          
-        console.log("First child value from Firebase:", incompleteInternship);
+        if(internshipDataFromFirebase){
+         incompleteInternship = Object.values(internshipDataFromFirebase).find(
+          (internship) => internship.internshipComplete === false
+        );}
+        
+          console.log("FirebaseStatus",internshipDataFromFirebase);
         if (internshipDataFromFirebase == null) {
           // Only call server if Firebase data does not exist
           const response = await axios.post("/api/virtual-internship/user-internship");
@@ -87,7 +86,7 @@ function VirtualInternship() {
     if (user) {
       sendRequest();
     }
-  }, [user]);
+  }, [user, uid]);
   
   
 

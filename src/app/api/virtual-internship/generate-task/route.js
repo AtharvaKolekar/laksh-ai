@@ -69,11 +69,8 @@ export async function POST(req, res) {
               3. Indicate a \`taskType\` that falls into one of these categories:
                  - **Code Submission**: User submits a code snippet or file.
                  - **Written Explanation**: User describes the task or process in text.
-                 - **Screenshot Upload**: User uploads a screenshot showing specific UI or configuration elements.
-                 - **Code Analysis Output**: User submits code along with console output or screenshots showing the application in action.
-
-              Provide a \`taskDescription\` with clear instructions on what the user should submit (e.g., code, screenshots, text explanations) 
-              and the criteria by which completion will be evaluated.
+                
+         
 
               Use the provided JSON data to create relevant tasks for the specific phase, ensuring the input type is suitable for AI evaluation.
 
@@ -83,7 +80,7 @@ export async function POST(req, res) {
               Expected output format:
               {
                 "task": "Task description for the user to complete",
-                "taskType": "One of: CODE_SUBMISSION, WRITTEN_EXPLANATION, SCREENSHOT_UPLOAD, CODE_ANALYSIS_OUTPUT"
+                "taskType": "One of: CODE_SUBMISSION, WRITTEN_EXPLANATION"
               }
               `,
             },
