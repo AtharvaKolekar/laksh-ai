@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 0rem;
   border-bottom: 1px solid var(--color-border);
   width: 100%;
   height: 80px;
@@ -56,7 +56,8 @@ a.signupBtn{
 /* Section1 */
 
 .sec1_wrapper{
-  height: calc(100vh - 250px);
+  /* height: calc(100dvh - 50px); */
+  /* height: 100vh; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,8 +67,22 @@ a.signupBtn{
   padding: 0 2rem;
   text-align: center;
 }
+.sec1_1{
+  font-size: 1.25rem;
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.sec1_1 video{
+  width: 500px;
+  object-fit: cover;
+  mix-blend-mode:darken;
+}
 
-.sec1 svg{
+.sec1_1 svg{
   height: 24px;
   width: 24px;
 }
@@ -86,8 +101,8 @@ a.signupBtn{
   font-weight: 600;
 }
 
-.sec1 h1 {
-  font-size: 4rem;
+.sec1_1 h1 {
+  /* font-size: 4rem; */
   font-weight: 600;
   background: linear-gradient(to bottom right, #1A93CF 0%, #A34ACF 76%);
   -webkit-background-clip: text;
@@ -117,16 +132,37 @@ a.tryBtn{
   color: var(--primary-color);
   border: var(--primary-color) 1.5px solid;
   border-radius: 30px;
-  padding: 0.25rem 0.75rem;
+  padding: 0.5rem 0.75rem;
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: 600;
-  margin: 60px auto;
+  display: block;
+  margin: 20px auto;
+  width: max-content;
 }
 
+.features{
+  display: flex;
+  margin: 0 auto;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: space-evenly;
+  width: 100%;
+  max-width: 400px;
+  flex-wrap: wrap;
+}
+
+.feature{
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  font-size: 1rem;
+  color: #333;
+}
 
 @media (max-width: 768px) {
   .header{
+    padding: 0.5rem 2rem;
     justify-content: space-between;
   }
   .nav {
@@ -138,8 +174,8 @@ a.tryBtn{
   .title{
     font-size: 1.2rem;
   }
-  .sec1 h1 {
-    font-size: 2.5rem;
+  .sec1_1 h1 {
+    font-size: 1.5rem;
   }
   .sec1 img{
     width: 250px;
@@ -147,5 +183,23 @@ a.tryBtn{
   }
   a.tryBtn{
     font-size: var(--f2);
+  }
+  .sec1_1{
+    flex-direction: column-reverse;
+    padding: 0 2rem;
+  }
+  .sec1_1 video{
+    width: 100%;
+  }
+  .features{
+    gap: 0px;
+    display: none;
+  }
+  .feature{
+    gap: 5px;
+    font-size: 0.9rem;
+  }
+  .checkIcon{
+    width: 16px;
   }
 }

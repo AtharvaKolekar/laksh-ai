@@ -155,7 +155,7 @@ export default function Layout({ children }) {
             <Button
                 className={styles.btn}
                 icon={
-                    <img src="/bot.png" width={80} height={80} alt="gemini" />
+                    <img src="/bot.png" width={60} height={60} alt="bot" />
                 }
                 onClick={showLoading}
             />
