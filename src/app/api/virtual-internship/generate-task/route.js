@@ -43,6 +43,7 @@ export async function POST(req, res) {
 
   try {
     const { phaseData } = await req.json();
+    console.log(phaseData);
 
     if (!phaseData) {
       return NextResponse.json({

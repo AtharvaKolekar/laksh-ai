@@ -60,10 +60,14 @@ const generateInternship = async (topic, months, apiKey) => {
   return result.response.text(); // Return the generated internship details
 };
 
-export const POST = async (req, res) => {
+export const POST = async (req) => {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
-
+    const url = new URL(req.url, `http://${req.headers.host}`); // Construct a full URL
+    const field = url.searchParams.get('field');
+    const duration = url.searchParams.get('duration');
+    console.log(req.body);
+    console.log(field, duration);
     if (!apiKey) {
       throw new Error("GEMINI_API_KEY is missing");
     }
@@ -80,11 +84,10 @@ export const POST = async (req, res) => {
     }
 
     // Parameters for generating internship
-    const topic = "MERN";
-    const months = 1;
+
 
     // Generate internship project
-    internship = await generateInternship(topic, months, apiKey);
+    internship = await generateInternship(field, duration, apiKey);
 
     // Send the response after internship is generated
     return NextResponse.json({

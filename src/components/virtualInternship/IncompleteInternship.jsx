@@ -197,7 +197,7 @@ const IncompleteInternshipPage = () => {
     }
   };
   if (loading) {
-    return <Spin size="large" className="spinner" />;
+    return <Spin size="large" className="spinner flex justify-center items-center h-screen" />;
   }
 
   if (!internshipData) {
@@ -290,17 +290,15 @@ const IncompleteInternshipPage = () => {
   return (
     <div className="h-full p-10">
       <div className="text-4xl text-center tracking-wide text-indigo-600 font-bold font-poppins mb-8">
-        Incomplete Virtual Internship
+        Ongoing Virtual Internship
       </div>
 
       <div className="mb-10">
-        <div className="text-xl font-bold text-indigo-600 mb-4">
-          Company Info
-        </div>
-        <Card bordered={false} className="mb-6">
-          <p>
+        
+        <Card bordered={false} className="mb-6 text-xl font-poppins">
+          <div>
             <strong>Company Name:</strong> {internshipData.CompanyName}
-          </p>
+          </div>
           <p>
             <strong>Company Description:</strong>{" "}
             {internshipData.companyDescription}
@@ -311,7 +309,7 @@ const IncompleteInternshipPage = () => {
         </Card>
       </div>
 
-      <div className="p-6 rounded-lg">
+      <div className="p-6 rounded-lg border-2">
         <div className="text-2xl font-semibold text-indigo-600 mb-6">
           Internship Progress
         </div>
@@ -332,24 +330,24 @@ const IncompleteInternshipPage = () => {
       </div>
 
       {currentPhase && (
-        <div className="mt-8 p-6 bg-gray-100 rounded-lg">
-          <h2 className="text-2xl font-semibold text-indigo-600">
+        <div className="mt-2 p-6  rounded-lg border-2 ">
+          <h2 className="text-xl font-semibold mb-3 text-indigo-600">
             Current Phase: {`Phase ${currentPhaseIndex + 1}`}
           </h2>
-          <p className="text-lg text-gray-700">
+          <p className="text-md text-gray-700">
             <strong>Task:</strong>{" "}
             {currentPhase.task || "No task found for this phase"}
           </p>
-          <p className="text-lg text-gray-700">
+          <p className="text-md text-gray-700">
             <strong>Deadline:</strong> {currentPhase.deadline}
           </p>
-          <p className="text-lg text-gray-700">
+          <p className="text-md text-gray-700">
             <strong>Guidance:</strong> {currentPhase.guidance}
           </p>
-          <p className="text-lg text-gray-700">
+          <p className="text-md text-gray-700">
             <strong>Topics Covered:</strong> {currentPhase.topicsCovered}
           </p>
-          <p className="text-lg text-gray-700">
+          <p className="text-md text-gray-700">
             <strong>Steps:</strong>
           </p>
           <ul className="list-disc pl-6">
@@ -362,19 +360,19 @@ const IncompleteInternshipPage = () => {
 
           {/* Display Task Input Based on Task Type */}
           {currentPhaseTask&&!isEvaluated && (
-            <div className="mt-6">
+            <div className="mt-6 bg-gray-200 p-3 rounded-md">
               <h3 className="text-xl text-indigo-600">Task To be Submitted</h3>
               <p><strong>Task: </strong>{currentPhaseTask.task}</p>
 
               {/* Render Input Field Based on Task Type */}
               {currentPhaseTask.taskType === "WRITTEN_EXPLANATION" && (
-                <div> <Input.TextArea
+                <div className="m-2"> <Input.TextArea
                 rows={4}
                 value={userResponse}
                 onChange={(e) => handleUserInput(e.target.value)}
                 placeholder="Write your explanation here"
               />
-              <button onClick={()=>handleTaskSubmission()}>Submit</button></div>
+              <button onClick={()=>handleTaskSubmission()} className="border-indigo-600 border-2 p-2 rounded m-2 self-center">Submit</button></div>
                
               )}
 
@@ -420,7 +418,7 @@ const IncompleteInternshipPage = () => {
       )}
       <div>
       {isEvaluated && evaluationResponse && (
-        <div>
+        <div className="p-3 border-2 mt-2 rounded">
           <h1 className="text-xl text-indigo-600">Ai Evaluation</h1>
           <div><strong>Score:</strong> {evaluationResponse.score}</div>
           <div><strong>Feedback:</strong> {evaluationResponse.feedback}</div>
