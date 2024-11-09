@@ -10,6 +10,7 @@ import MessageContainer from "@/components/messageContainer/MessageContainer";
 import MessageRight from "@/components/messageContainer/MessageRight";
 import MessageLeft from "@/components/messageContainer/MessageLeft";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { useRouter } from "next/navigation";
 
 const { Search } = Input;
 
@@ -20,6 +21,13 @@ export default function Layout({ children }) {
     const [userInput, setUserInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [isGreeted, setIsGreeted] = useState(false);
+    const [msg,setMsg]=useState([]);
+    const router=useRouter();
+    const getRoadmap = (career) => {
+        setOpen(false);
+        router.push(`/Dashboard/Roadmaps?career=${encodeURIComponent(career)}`);
+        
+      };
 
     const containerRef = useRef(null);
     useEffect(() => {
@@ -35,7 +43,7 @@ export default function Layout({ children }) {
     const model = genAI.getGenerativeModel({
         model: "gemini-1.5-flash",
         systemInstruction:
-            'You are a chatbot that helps user providing their queries solved. Provide a brief response text explaining the roadmap for the specified career. Then, return the function call details. \n\nList of function: \ngetRoadmap: gives the roadmap of requested career/interest,\ngetVirtualInternship: give the virtual internship program of requested career/interest.\n\nIf interest and career or request  is not requested and just a normal talk then return only response text and functionCalling be null.\nelse response like : " here is a ..." in just 2-3 lines.\n',
+            'You are a LakshAi that helps user providing their queries solved. Provide a brief response text explaining the roadmap for the specified career. Then, return the function call details. \n\nList of function: \ngetRoadmap: gives the roadmap of requested career/interest,\ngetVirtualInternship: give the virtual internship program of requested career/interest.\n\nIf interest and career or request  is not requested and just a normal talk then return only response text and functionCalling be null.\nelse response like : " here is a ..." in just 2-3 lines.\n',
     });
 
     const generationConfig = {
@@ -86,6 +94,7 @@ export default function Layout({ children }) {
 
         // Create the new message structure with the parsed response
         console.log(messages);
+        console.log("msg:"+msg);
         const newMessages = [
             ...messages,
             { role: "user", parts: [{ text: userInput }] },
@@ -98,8 +107,23 @@ export default function Layout({ children }) {
                 ],
             },
         ];
+        const newMsgs = [
+            ...msg,
+            { role: "user", parts: [{ text: userInput }] },
+            {
+                role: "model",
+                parts: [
+                    {
+                        text: parsedResponse.response,
+                        functions:parsedResponse.functionCalling
+                    },
+                ],
+            },
+        ];
+
         // Ensure messages state is updated correctly to trigger re-render
         setMessages(newMessages);
+        setMsg(newMsgs)
 
         // Handle function call if available
         if (
@@ -176,11 +200,11 @@ export default function Layout({ children }) {
                 <div className={styles.modal} ref={containerRef}>
                     {(!loading || isGreeted) && (
                         <MessageLeft
-                            text={"Welcome to LakshAI. How can I help you?"}
+                            text={"Hello there👋 I'm LakshAI your personal AI Mentor ✨ How can I help you today?"}
                             callback={() => setIsGreeted(true)}
                         />
                     )}
-                    {messages.map((message, index) => {
+                    {msg.map((message, index) => {
                         if (message.role === "user") {
                             return (
                                 <MessageRight
@@ -191,12 +215,31 @@ export default function Layout({ children }) {
                         } else {
                             return (
                                 <>
+                                  {message.parts[0].functions?.map(i=><>
+                                    {
+                                        i.functionName=="getRoadmap"?
+                                        <Button onClick={()=>getRoadmap(i.parameter)} style={{ margin: '5px' }} color="primary" variant="outlined">
+                                        Explore {i.parameter} Roadmap
+                                        </Button>:
+                                        <>
+                                        {i.functionName=="getVirtualInternship"?
+                                        <Button style={{ margin: '5px' }} color="danger" variant="outlined">
+                                        Get a virtual internship in {i.parameter} 
+                                        </Button>:
+                                        <Button style={{ margin: '5px' }} color="default" variant="outlined">
+                                        {i?.parameter} 
+                                        </Button>
+                                        }
+                                        </>
+                                        
+                                    }
+                                        
+                                    </>)}
                                     <MessageLeft
                                         key={index}
                                         text={message.parts[0].text}
                                         callback={() => setIsTyping(false)}
                                     />
-                                    {/* <Button>{message.functionCalling}</Button> */}
                                 </>
                             );
                         }

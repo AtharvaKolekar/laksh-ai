@@ -12,15 +12,15 @@
 
 .userResponse {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   width: 100%;
-  align-items: end;
+  align-items: flex-end;
 }
 .parent {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .userResponseText {

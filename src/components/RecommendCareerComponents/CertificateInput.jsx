@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from "./page.module.css";
 
 const CertificateInput = ({ onContinue }) => {
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState([{ option: "None", isSelected: false }]);
   const [newOption, setNewOption] = useState("");
 
   const setOption = (option) => {

@@ -48,7 +48,7 @@ export default function DashboardLayout({ children }) {
 
     useEffect(() => {
         setIsStarted(progresses.length > 0);
-    }, [progresses]);
+    }, []);
 
     return (
         <main>

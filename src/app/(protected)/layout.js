@@ -64,7 +64,7 @@ export default function Layout({ children }) {
 
     myfun();
    
-  }, [pathname, user,  router]);
+  }, [database, pathname, user,  router]);
 
 
   if (user === false) return <LoadingPage />;
