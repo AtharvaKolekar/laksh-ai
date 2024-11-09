@@ -45,6 +45,9 @@ export default function Layout({ children }) {
         case "/Dashboard/Roadmaps":
           setTitle("Roadmaps");
           break;
+        case "/Dashboard/Virtual-Internship":
+          setTitle("Virtual Internship");
+          break;
         default:
           break;
       }
