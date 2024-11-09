@@ -38,7 +38,7 @@ const Page = () => {
   // If there is an incomplete internship, redirect to /virtual
   useEffect(() => {
     if (!loading && incompleteInternship) {
-      router.push('/virtual'); // Redirect to /virtual if there's an incomplete internship
+      router.push('/Dashboard/Virtual-Internship/virtual'); // Redirect to /virtual if there's an incomplete internship
     }
   }, [loading, incompleteInternship, router]);
 
@@ -47,7 +47,7 @@ const Page = () => {
     e.preventDefault();
     if (field && duration) {
       // Redirect to /virtual with query parameters
-      router.push(`/virtual?field=${field}&duration=${duration}`);
+      router.push(`/Dashboard/Virtual-Internship/virtual?field=${field}&duration=${duration}`);
     }
   };
 

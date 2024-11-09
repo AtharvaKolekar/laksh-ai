@@ -78,7 +78,7 @@ export default function DashboardLayout({ children }) {
                     </div>
                     <div
                         className={styles.module}
-                        onClick={() => router.push("/Dashboard/Internship")}
+                        onClick={() => router.push("/Dashboard/Virtual-Internship")}
                     >
                         <img src="/internship.png" alt="internship" />
                         <div className={styles.module_title}>

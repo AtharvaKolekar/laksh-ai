@@ -49,7 +49,7 @@ export default function ProfileIcon({ logout }) {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/internship">
+                        <Link href="/Dashboard/Virtual-Internship">
                             <button>
                                 <span>Internships</span>
                             </button>
