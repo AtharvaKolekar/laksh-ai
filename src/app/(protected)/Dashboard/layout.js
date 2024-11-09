@@ -76,14 +76,22 @@ export default function Layout({ children }) {
         const chatSession = model.startChat({
             generationConfig,
             history: [
+                {
+                    role: "user",
+                    parts: [{ text: "You are LakshAI, a friendly assistant who works for LakshAI Platform. LakshAI is career guidance app designed to help users make informed career decisions and achieve their professional goals. User can share thier passions and interests with us, and our app helps them to  find the best career path. It offers personalized career recommendations, tailored learning roadmaps, and virtual internships to build relevant skills. Through mentorship, progress tracking, and an AI chatbot, LakshAI supports users at every step of their career journey. The app’s goal is to empower users with the resources and insights needed to excel in their chosen paths. Encourage users to use our platform for the best career guidance and virtual internships opportunities. Remember to use simple language, use emojis answer it into 2-3 sentences." }],
+                },
+                {
+                    role: "model",
+                    parts: [{ text: "Hey there! Welcome to LakshAI! Ready to explore your career options and unlock your potential? Let's chat about your passions and interests, and I can help you find the perfect path!" }],
+                },
                 ...messages.map((message) => ({
                     ...message,
                     parts: message.parts || [{ text: message.text }], // Ensure parts exist
                 })),
-                {
-                    role: "user",
-                    parts: [{ text: userInput }], // Proper format for user input
-                },
+                // {
+                //     role: "user",
+                //     parts: [{ text: userInput }], // Proper format for user input
+                // },
             ],
         });
 
