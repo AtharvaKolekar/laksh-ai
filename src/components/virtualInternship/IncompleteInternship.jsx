@@ -20,6 +20,7 @@ import Editor from "@monaco-editor/react";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/lib/codemirror.css"; // Import CodeMirror styles
 import "codemirror/theme/material.css"; // Import the chosen theme
+import "@/app/virtual.css"
 import { useRouter } from "next/navigation";
 const { Step } = Steps;
 

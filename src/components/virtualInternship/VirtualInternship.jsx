@@ -5,6 +5,7 @@ import { useUser } from "@/lib/auth";
 import { database } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { ref, set, push, get } from "firebase/database";
+import "@/app/virtual.css"
 import { useSearchParams } from "react-router-dom";
 import MessageContainer from "../loadingPage/LoadingPage";
 import LoadingComponent from "../RecommendCareerComponents/LoadingComponent";
