@@ -217,7 +217,7 @@ function VirtualInternship() {
               className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out"
               onClick={() => {
                 newInternship ? addInternship(internshipData) : null;
-                router.push("/virtual/test");
+                router.push("/Dashboard/Virtual-Internship/virtual/test");
               }}
             >
               {newInternship ? "Start New Internship" : "Continue Internship"}

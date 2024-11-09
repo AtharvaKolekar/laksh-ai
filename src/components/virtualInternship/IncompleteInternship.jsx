@@ -85,7 +85,7 @@ const IncompleteInternshipPage = () => {
       if (isLastPhase&&internshipData.internshipKey) {
         // Navigate to the certificate generation route
         console.log("internshipKey", internshipData.internshipKey);
-        const url = `/virtual/generate-certificate?internshipKey=${internshipData.internshipKey}`;
+        const url = `/Dashboard/Virtual-Internship/virtual/generate-certificate?internshipKey=${internshipData.internshipKey}`;
       
       // Navigate to the URL with query parameter
       router.push(url);
@@ -97,7 +97,7 @@ const IncompleteInternshipPage = () => {
     
     if (isLastPhase && evaluationResponse.score > 50) {
       // Navigate to the certificate generation route
-      const url = `/virtual/generate-certificate?internshipKey=${internshipData.internshipKey}`;
+      const url = `/Dashboard/Virtual-Internship/virtual/generate-certificate?internshipKey=${internshipData.internshipKey}`;
       
       // Navigate to the URL with query parameter
       router.push(url);
