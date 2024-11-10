@@ -1,18 +1,19 @@
 "use client";
+import { Button } from "antd";
 import { useEffect, useRef } from "react";
 
-export default function CertificateCanvasPage() {
+export default function CertificateCanvasPage({
+    name="Name", course="Course", certID = "67854r5452"
+}) {
     const canvasRef = useRef(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
-
-        const name = "Munir";
-        const course = "Cybersecurity";
-        const start = "October 2024";
+    
+        const start = "November 2024";
         const end = "December 2024";
-        const certID = "67854r5452";
+       
 
         const background = new Image();
         background.src = "/cert.png";
@@ -69,7 +70,7 @@ export default function CertificateCanvasPage() {
 
     return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1>Certificate of Completion</h1>
+            <h1 className="m-2 mt-5 font-semibold text-indigo-600 text-xl">Certificate of Completion</h1>
             <canvas
                 ref={canvasRef}
                 id="certificateCanvas"
@@ -82,12 +83,12 @@ export default function CertificateCanvasPage() {
                 }}
             ></canvas>
             <br />
-            <button onClick={downloadPDF} style={{ marginTop: "20px" }}>
+            <Button onClick={downloadPDF} style={{ marginTop: "20px" }} >
                 Download Certificate as PDF
-            </button>
+            </Button>
 
             {/* Importing jsPDF library via script tag */}
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+          
         </div>
     );
 }

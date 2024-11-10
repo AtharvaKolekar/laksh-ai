@@ -22,6 +22,8 @@
     "firebase": "^10.14.1",
     "formidable": "^3.5.2",
     "fs": "^0.0.1-security",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
     "next": "14.2.3",
     "next-connect": "^1.0.0",
     "react": "^18",
