@@ -13,7 +13,7 @@ import { Button, Modal, Empty, Skeleton, Typography } from "antd";
 import { ExportOutlined } from '@ant-design/icons';
 
 export default function Dashboard() {
-    const router = useRouter();
+
     const app = initFirebase();
     const database = getDatabase(app);
     const user = useUser();
@@ -23,7 +23,6 @@ export default function Dashboard() {
     const [date, setDate] = useState("");
     const [duration, setDuration] = useState("");
     const [meetingUrl, setMeetingUrl] = useState("");
-
     useEffect(() => {
         if (isBooked) {
             const data = bookingData;
@@ -78,10 +77,11 @@ export default function Dashboard() {
 }
 
 function MainScreen({ isVisible, callback, isBooked, bookedData, date, duration, meetingUrl }) {
+    const router = useRouter();
     return (
       <div style={{ display: isVisible ? "none" : "block" }}>
         {isBooked && bookedData ? (
-            <div className={styles.booking}>
+         <div>   <div className={styles.booking}>
                 <img src="/meet.webp" alt="meet" />
                 <div className={styles.bookingContent}>    
                     <h3>Meeting Scheduled</h3>
@@ -89,7 +89,10 @@ function MainScreen({ isVisible, callback, isBooked, bookedData, date, duration,
                     <p>{duration}</p>
                     <Button type="primary" size="middle" onClick={() => window.open(meetingUrl, "_blank")}><strong>Join Meeting <ExportOutlined /></strong></Button>
                 </div>
+                <Button onClick={()=>router.push("/Dashboard/Virtual-Internship/virtual/test")}>Continue to internship</Button>
             </div>
+                
+                </div>
         ): (
             <Empty
                 image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"

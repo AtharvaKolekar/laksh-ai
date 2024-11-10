@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from "next/link";
@@ -56,9 +57,9 @@ export default function ProfileIcon({ logout }) {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/Projects">
+                        <Link href="/Dashboard/MentorOtpGenerator">
                             <button>
-                                <span>Projects</span>
+                                <span>Admin Otp</span>
                             </button>
                         </Link>
                     </li>

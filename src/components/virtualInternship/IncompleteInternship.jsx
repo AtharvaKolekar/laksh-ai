@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { useUser } from "@/lib/auth";
 import { database } from "@/lib/firebase";
@@ -20,7 +20,7 @@ import Editor from "@monaco-editor/react";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/lib/codemirror.css"; // Import CodeMirror styles
 import "codemirror/theme/material.css"; // Import the chosen theme
-import "@/app/virtual.css"
+import "@/app/virtual.css";
 import { useRouter } from "next/navigation";
 const { Step } = Steps;
 
@@ -29,11 +29,35 @@ const IncompleteInternshipPage = () => {
   const uid = user?.uid;
   const [isEvaluated, setIsEvaluated] = useState(false);
   const [internshipData, setInternshipData] = useState(null);
-  const [evaluationResponse, setEvaluationResponse] = useState({})
+  const [evaluationResponse, setEvaluationResponse] = useState({});
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentPhaseTask, setCurrentPhaseTask] = useState(null); // To store task for the current phase
   const [userResponse, setUserResponse] = useState(""); // To store the user's response to the task
+  const [isEvaluatedByMentor, setIsEValuatedByMentor] = useState(false);
+  const [otp, setOtp] = useState("");
+  const correctOtp = [
+    "295276",
+    "559636",
+    "990764",
+    "569440",
+    "609128",
+    "847605",
+    "766801",
+    "744819",
+    "432837",
+    "374635",
+    "771808",
+    "654322",
+    "442211",
+    "842420",
+    "966982",
+    "917758",
+    "141602",
+    "677487",
+    "184840",
+    "652583",
+  ];
 
   useEffect(() => {
     async function fetchInternship() {
@@ -75,30 +99,30 @@ const IncompleteInternshipPage = () => {
       fetchInternship();
     }
   }, [user, uid]);
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
     console.log("internshipData", internshipData);
     if (internshipData) {
-
-      const isLastPhase = internshipData.completedPhases.length === internshipData.phases.length;
+      const isLastPhase =
+        internshipData.completedPhases.length === internshipData.phases.length;
       console.log(isLastPhase);
-      if (isLastPhase&&internshipData.internshipKey) {
+      if (isLastPhase && internshipData.internshipKey) {
         // Navigate to the certificate generation route
         console.log("internshipKey", internshipData.internshipKey);
         const url = `/Dashboard/Virtual-Internship/virtual/generate-certificate?internshipKey=${internshipData.internshipKey}`;
-      
-      // Navigate to the URL with query parameter
-      router.push(url);
+
+        // Navigate to the URL with query parameter
+        router.push(url);
       }
     }
   }, [internshipData, router]);
   const handleRouting = () => {
     const isLastPhase = internshipData.completedPhases.length === phases.length;
-    
+
     if (isLastPhase && evaluationResponse.score > 50) {
       // Navigate to the certificate generation route
       const url = `/Dashboard/Virtual-Internship/virtual/generate-certificate?internshipKey=${internshipData.internshipKey}`;
-      
+
       // Navigate to the URL with query parameter
       router.push(url);
     } else {
@@ -176,29 +200,38 @@ const IncompleteInternshipPage = () => {
 
   const handleFileUpload = async (file) => {
     const formData = new FormData();
-    formData.append('file', file);
-  
+    formData.append("file", file);
+
     try {
       // Send the file to the server using axios POST request
-      const response = await axios.post('/api/virtual-internship/evaluate-image', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-  
+      const response = await axios.post(
+        "/api/virtual-internship/evaluate-image",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       // Handle the server response
       if (response.status === 200) {
         message.success(`${file.name} file uploaded successfully.`);
       } else {
-        message.error('Failed to upload the file.');
+        message.error("Failed to upload the file.");
       }
     } catch (error) {
-      console.error('Error uploading file:', error);
-      message.error('Error uploading file.');
+      console.error("Error uploading file:", error);
+      message.error("Error uploading file.");
     }
   };
   if (loading) {
-    return <Spin size="large" className="spinner flex justify-center items-center h-screen" />;
+    return (
+      <Spin
+        size="large"
+        className="spinner flex justify-center items-center h-screen"
+      />
+    );
   }
 
   if (!internshipData) {
@@ -229,10 +262,10 @@ const IncompleteInternshipPage = () => {
       {dot}
     </Popover>
   );
-  
+
   const phases = internshipData.phases || [];
   const steps = phases.map((phase, index) => {
-    const isCompleted = internshipData.completedPhases==index
+    const isCompleted = internshipData.completedPhases == index;
     const isNextPhase = index === internshipData.completedPhases.length;
     const phaseStatus = isCompleted
       ? "finish"
@@ -249,42 +282,71 @@ const IncompleteInternshipPage = () => {
   const handleEditorChange = (value) => {
     setUserResponse(value); // Update the state with the new value from Monaco Editor
   };
-  
+
   const handleTaskSubmission = async () => {
     try {
       const taskType = currentPhaseTask?.taskType;
-      if (taskType === "WRITTEN_EXPLANATION"||taskType=="CODE_SUBMISSION") {
-       const response =  await axios.post("/api/virtual-internship/evaluate-text", { userResponse, taskDescription:currentPhaseTask.task });
-      console.log("data",response.data);
-       if(response.status==200){
-        
-        setIsEvaluated(true);
-        setEvaluationResponse(response.data)
-        console.log(`UserData/${uid}/internships/${internshipData.internshipKey}`);
-        console.log("status", response.data);
-        if(response.data.score>50){
-          console.log("hello");
-          const internshipRef = ref(
-            database,
-            `UserData/${uid}/internships/${internshipData.internshipKey}/completedPhases`
+      if (taskType === "WRITTEN_EXPLANATION" || taskType == "CODE_SUBMISSION") {
+        const response = await axios.post(
+          "/api/virtual-internship/evaluate-text",
+          { userResponse, taskDescription: currentPhaseTask.task }
+        );
+        console.log("data", response.data);
+        if (response.status == 200) {
+          setIsEvaluated(true);
+          setEvaluationResponse(response.data);
+          console.log(
+            `UserData/${uid}/internships/${internshipData.internshipKey}`
           );
-          console.log(internshipData);
-          // Increment completed phases and store evaluation result
-          await set(internshipRef, 
-            [...internshipData.completedPhases, internshipData.completedPhases.length]
-          );
+          console.log("status", response.data);
+          if (response.data.score > 50) {
+            console.log("hello");
+            const internshipRef = ref(
+              database,
+              `UserData/${uid}/internships/${internshipData.internshipKey}/completedPhases`
+            );
+            console.log(internshipData);
+            // Increment completed phases and store evaluation result
+            await set(internshipRef, [
+              ...internshipData.completedPhases,
+              internshipData.completedPhases.length,
+            ]);
+          }
         }
-      
-       }
-      } else if (taskType === "SCREENSHOT_UPLOAD" || taskType === "CODE_ANALYSIS_OUTPUT") {
-        await axios.post("/api/virtual-internship/evaluate-image", { file: userResponse, taskDescription: currentPhaseTask.task });
-      } 
+      } else if (
+        taskType === "SCREENSHOT_UPLOAD" ||
+        taskType === "CODE_ANALYSIS_OUTPUT"
+      ) {
+        await axios.post("/api/virtual-internship/evaluate-image", {
+          file: userResponse,
+          taskDescription: currentPhaseTask.task,
+        });
+      }
       message.success("Task submitted successfully!");
     } catch (error) {
       console.error("Error submitting task:", error);
       message.error("Failed to submit task.");
     }
   };
+
+
+  // Function to handle input change
+  const handleOtpChange = (event) => {
+    setOtp(event.target.value);
+  };
+
+  // Function to handle submit
+  const handleSubmit = () => {
+    if (correctOtp.includes(otp)) {
+      setIsEValuatedByMentor(true)
+      console.log("Code is valid and present in the array.");
+      message.success("Message code is invalid")
+    } else {
+      console.log("Code is not present in the array.");
+      message.error("Mentor Code is invalid")
+    }
+  };
+
   const currentPhaseIndex = internshipData.completedPhases.length;
   const currentPhase = phases[currentPhaseIndex];
 
@@ -295,7 +357,6 @@ const IncompleteInternshipPage = () => {
       </div>
 
       <div className="mb-10">
-        
         <Card bordered={false} className="mb-6 text-xl font-poppins">
           <div>
             <strong>Company Name:</strong> {internshipData.CompanyName}
@@ -358,23 +419,52 @@ const IncompleteInternshipPage = () => {
               </li>
             ))}
           </ul>
-
+              {!isEvaluatedByMentor&&<div className="text-indigo-600 text-xl font-semibold font-poppins m-3">
+                <h1 className="text-indigo-600 text-xl font-semibold font-poppins my-3 ">
+                  Schedule a meet with the Mentor
+                </h1>
+                <div>
+                  <Button className="p-3 w-32" onClick={()=>router.push("/Dashboard/Mentors")}>Schedule</Button>
+                  <p className="text-gray-400 font-normal mt-3">
+                    Please enter One-Time Code by the Mentor
+                  </p>
+                  <div>
+                    <Input
+                      className="flex w-72 mt-1"
+                      onChange={handleOtpChange}
+                      placeholder="OTP"
+                      value={otp} // Bind the value to input
+                    />
+                    <Button onClick={handleSubmit} className="mt-2 p-3 w-32">Submit Code</Button>
+                  </div>
+                </div>
+          </div>}
           {/* Display Task Input Based on Task Type */}
-          {currentPhaseTask&&!isEvaluated && (
+          {isEvaluatedByMentor && currentPhaseTask && !isEvaluated && (
             <div className="mt-6 bg-gray-200 p-3 rounded-md">
               <h3 className="text-xl text-indigo-600">Task To be Submitted</h3>
-              <p><strong>Task: </strong>{currentPhaseTask.task}</p>
+              <p>
+                <strong>Task: </strong>
+                {currentPhaseTask.task}
+              </p>
 
               {/* Render Input Field Based on Task Type */}
               {currentPhaseTask.taskType === "WRITTEN_EXPLANATION" && (
-                <div className="m-2"> <Input.TextArea
-                rows={4}
-                value={userResponse}
-                onChange={(e) => handleUserInput(e.target.value)}
-                placeholder="Write your explanation here"
-              />
-              <button onClick={()=>handleTaskSubmission()} className="border-indigo-600 border-2 p-2 rounded m-2 self-center">Submit</button></div>
-               
+                <div className="m-2">
+                  {" "}
+                  <Input.TextArea
+                    rows={4}
+                    value={userResponse}
+                    onChange={(e) => handleUserInput(e.target.value)}
+                    placeholder="Write your explanation here"
+                  />
+                  <button
+                    onClick={() => handleTaskSubmission()}
+                    className="border-indigo-600 border-2 p-2 rounded m-2 self-center"
+                  >
+                    Submit
+                  </button>
+                </div>
               )}
 
               {currentPhaseTask.taskType === "SCREENSHOT_UPLOAD" && (
@@ -396,7 +486,9 @@ const IncompleteInternshipPage = () => {
                     value={userResponse} // Bind the state to Monaco's value prop
                     onChange={handleEditorChange} // Bind the onChange event
                   />
-                  <Button onClick={()=>handleTaskSubmission()}>Sumbit Your Code</Button>
+                  <Button onClick={() => handleTaskSubmission()}>
+                    Sumbit Your Code
+                  </Button>
                 </div>
               )}
               {currentPhaseTask.taskType === "CODE_ANALYSIS_OUTPUT" && (
@@ -418,20 +510,28 @@ const IncompleteInternshipPage = () => {
         </div>
       )}
       <div>
-      {isEvaluated && evaluationResponse && (
-        <div className="p-3 border-2 mt-2 rounded">
-          <h1 className="text-xl text-indigo-600">Ai Evaluation</h1>
-          <div><strong>Score:</strong> {evaluationResponse.score}</div>
-          <div><strong>Feedback:</strong> {evaluationResponse.feedback}</div>
-          <div><strong>Issues or Improvements:</strong> {evaluationResponse.issuesOrImprovement}</div>
-          <Button onClick={handleRouting}>
-              {(internshipData.completedPhases.length === phases.length-1)&&(internshipData.score>50)
+        {isEvaluated && evaluationResponse && (
+          <div className="p-3 border-2 mt-2 rounded">
+            <h1 className="text-xl text-indigo-600">Ai Evaluation</h1>
+            <div>
+              <strong>Score:</strong> {evaluationResponse.score}
+            </div>
+            <div>
+              <strong>Feedback:</strong> {evaluationResponse.feedback}
+            </div>
+            <div>
+              <strong>Issues or Improvements:</strong>{" "}
+              {evaluationResponse.issuesOrImprovement}
+            </div>
+            <Button onClick={handleRouting}>
+              {internshipData.completedPhases.length === phases.length - 1 &&
+              internshipData.score > 50
                 ? "Generate Certificate"
                 : "Continue"}
             </Button>
-        </div>
-      )}
-    </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
