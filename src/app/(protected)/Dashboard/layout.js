@@ -26,8 +26,12 @@ export default function Layout({ children }) {
     const getRoadmap = (career) => {
         setOpen(false);
         router.push(`/Dashboard/Roadmaps?career=${encodeURIComponent(career)}`);
-        
-      };
+    };
+
+    const getVirtualInternship = (course) => {
+        setOpen(false);
+        router.push(`/Dashboard/Virtual-Internship/virtual?field=${encodeURIComponent(course)}&duration=1`);
+    };
 
     const containerRef = useRef(null);
     useEffect(() => {
@@ -231,7 +235,7 @@ export default function Layout({ children }) {
                                         </Button>:
                                         <>
                                         {i.functionName=="getVirtualInternship"?
-                                        <Button style={{ margin: '5px' }} color="danger" variant="outlined">
+                                        <Button onClick={()=>getVirtualInternship(i.parameter)} style={{ margin: '5px' }} color="danger" variant="outlined">
                                         Get a virtual internship in {i.parameter} 
                                         </Button>:
                                         <Button style={{ margin: '5px' }} color="default" variant="outlined">
