@@ -116,7 +116,7 @@ const CertificateContent = () => {
       </div>
       {
         isGenerated&& <div>
-        <CertificateCanvasPage name={userData.name} certID={internshipKey} />
+        <CertificateCanvasPage name={userData.name} course={YourRole.replace(/\sIntern$/, "")} certID={internshipKey} />
       </div>
       }
 

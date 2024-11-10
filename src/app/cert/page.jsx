@@ -1,19 +1,19 @@
 "use client";
 import { Button } from "antd";
 import { useEffect, useRef } from "react";
+import { PDFDocument } from "pdf-lib"; // Import pdf-lib
 
 export default function CertificateCanvasPage({
-    name="Name", course="Course", certID = "67854r5452"
+    name = "Name", course = "Course", certID = "67854r5452"
 }) {
     const canvasRef = useRef(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
-    
+
         const start = "November 2024";
         const end = "December 2024";
-       
 
         const background = new Image();
         background.src = "/cert.png";
@@ -51,21 +51,41 @@ export default function CertificateCanvasPage({
         };
     }, []);
 
-    // Function to download the canvas as a PDF with 1600x1000 page size
-    const downloadPDF = () => {
-        const jsPDF = window.jspdf.jsPDF;
-        const doc = new jsPDF({
-            orientation: "landscape", // optional, adjust as needed
-            unit: "mm", // units in millimeters
-            format: [423.2, 264.5], // width and height in mm (converted from 1600x1000px)
-        });
+    const downloadPDF = async () => {
+        // Create a new PDF document
+        const pdfDoc = await PDFDocument.create();
 
+        // Add a page to the document with the size 1600x1000px (converted to mm)
+        const page = pdfDoc.addPage([423.2, 264.5]); // 1600px x 1000px converted to mm
+
+        // Get the canvas image as PNG
         const canvas = canvasRef.current;
         const imgData = canvas.toDataURL("image/png");
 
-        // Add the canvas image to the PDF with the correct size
-        doc.addImage(imgData, "PNG", 10, 10, 403.2, 253.5); // Adjust the image size inside PDF
-        doc.save("certificate.pdf");
+        // Embed the PNG image into the PDF
+        const img = await pdfDoc.embedPng(imgData);
+        const imgDims = img.scale(1); // Scale the image appropriately
+
+        // Calculate the position and size of the image in the PDF
+        const imageWidth = 423.2; // Width in mm (to match page size)
+        const imageHeight = (imgDims.height / imgDims.width) * imageWidth;
+
+        // Draw the image on the page
+        page.drawImage(img, {
+            x: 0,
+            y: page.getHeight() - imageHeight, // Position the image at the top
+            width: imageWidth,
+            height: imageHeight,
+        });
+
+        // Save the PDF
+        const pdfBytes = await pdfDoc.save();
+
+        // Download the PDF
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(new Blob([pdfBytes], { type: "application/pdf" }));
+        link.download = "certificate.pdf";
+        link.click();
     };
 
     return (
@@ -83,12 +103,9 @@ export default function CertificateCanvasPage({
                 }}
             ></canvas>
             <br />
-            <Button onClick={downloadPDF} style={{ marginTop: "20px" }} >
+            <Button onClick={downloadPDF} style={{ marginTop: "20px" }}>
                 Download Certificate as PDF
             </Button>
-
-            {/* Importing jsPDF library via script tag */}
-          
         </div>
     );
 }
