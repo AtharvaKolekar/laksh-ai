@@ -6,6 +6,7 @@ import { getDatabase, ref, get, update } from "firebase/database";
 import { database } from "@/lib/firebase";
 import { useUser } from "@/lib/auth";
 import "@/app/virtual.css";
+import CertificateCanvasPage from "@/app/cert/page";
 
 const GenerateCertificate = () => {
   return (
@@ -23,7 +24,8 @@ const CertificateContent = () => {
   const [internshipData, setInternshipData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [uid, setUid] = useState(null);
-
+  const [isGenerated, setIsGenerated] = useState(false)
+  const [userData, setUserData] = useState()
   // Fetch user UID and set it
   useEffect(() => {
     if (user && user.uid) {
@@ -37,12 +39,20 @@ const CertificateContent = () => {
       const fetchInternshipData = async () => {
         const db = getDatabase();
         const internshipRef = ref(db, `UserData/${uid}/internships/${internshipKey}`);
+        const userRef = ref(db, `UserData/${uid}/Details`)
         const snapshot = await get(internshipRef);
+        const userSnap = await get(userRef)
         if (snapshot.exists()) {
           setInternshipData(snapshot.val());
           console.log("data", snapshot.val());
         } else {
           console.log("No such document!");
+        }
+        if(userSnap.exists()){
+          console.log(userSnap.val());
+          setUserData(userSnap.val())
+        }else{
+          console.log("User not found");
         }
         setLoading(false);
       };
@@ -55,9 +65,10 @@ const CertificateContent = () => {
     if (internshipData && uid) {
       try {
         const internshipRef = ref(database, `UserData/${uid}/internships/${internshipKey}`);
-        await update(internshipRef, {
-          internshipComplete: true,
-        });
+        // await update(internshipRef, {
+        //   internshipComplete: true,
+        // });
+        setIsGenerated(true)
         router.push("/Dashboard/Virtual-Internship/virtual/generate-certificate");
       } catch (error) {
         console.error("Error updating document:", error);
@@ -73,13 +84,16 @@ const CertificateContent = () => {
   if (!internshipData) {
     return <div>No internship data found</div>;
   }
-
+  console.log("Internship", internshipData.internshipData);
   const {
     completedPhases,
     internshipComplete,
     internshipData: { CompanyName, YourRole, companyDescription, internshipName, phases },
   } = internshipData;
 
+  <svg width="200" height="100" xmlns="http://www.w3.org/2000/svg">
+  <text x="10" y="40" font-family="Arial" font-size="24" fill="black">Hello, SVG!</text>
+</svg>
   return (
     <div className="bg-[#f0f8ff] py-10">
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
@@ -100,6 +114,12 @@ const CertificateContent = () => {
           Generate Certificate
         </button>
       </div>
+      {
+        isGenerated&& <div>
+        <CertificateCanvasPage name={userData.name} certID={internshipKey} />
+      </div>
+      }
+
     </div>
   );
 };
