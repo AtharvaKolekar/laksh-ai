@@ -1,30 +1,43 @@
-## Welcome to <b>WonderAI</b> ✨
-Your Personal AI Mentor 😎🎓
+# Welcome to <b>LakshAI</b> ✨
+We have built LakshAI, a career guidance app designed to help users make informed career decisions and achieve their professional goals. 🚀 It offers personalized career recommendations, tailored learning roadmaps, and virtual internships to build relevant skills. Through mentorship, progress tracking, and an AI chatbot 🤖, LakshAI supports users at every step of their career journey. The app’s goal is to empower users with the resources and insights needed to excel in their chosen paths. 💼
 
-## Get Started
+<b>Key Features:</b>
+
+🎯 Goal Setting and Tracking
+
+📈 Trending Career Insights
+
+🤖 Career Recommendation
+
+🗺️ Personalized Roadmap Generator
+
+💻 Virtual Internship
+
+🧑‍🏫 Mentorship and Coaching
+
+🗣️ AI Chatbot Assistance
+
+🏅 Dynamic Certificate Generation
+
+
+<b>Get Started:</b>
+
 Share your passions and interests with us, and we'll help you find the best career path tailored just for you!
 
-[Get Started](https://wonder-ai-six.vercel.app/GetStarted) for free
+[Get Started](https://laksh-ai.vercel.app/GetStarted) for free
 
-## Run command
-
-Clone the repository into the folder
-
-```bash
-git clone https://github.com/AtharvaKolekar/wonder-ai.git
-```
-Change directory to `wonder-ai`
-```bash
-cd wonder-ai
-```
-Install the dependencies start the server
-```bash
-npm i && npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Tech Stack used
-- Next JS 14
-- Firebase
+# Tech Stack
+- NextJS 14
+- Ant Design
+- Tailwind CSS
+- Google AI Studio: Gemini-1.5
+- Firebase: Realtime Database and User Authentication
 - Reactstrap
+- Codemirror
+- JsPDF
+
+# Collaborators
+
+<a href="https://github.com/AtharvaKolekar/laksh-ai/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=AtharvaKolekar/laksh-ai" />
+</a>
